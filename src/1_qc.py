@@ -43,7 +43,7 @@ min_cells = 5
 input_path = "/Users/sarapatti/Desktop/PhD_projects/Llyod_lab/ReCoDe-spatial-transcriptomics"
 output_path = "/Users/sarapatti/Desktop/PhD_projects/Llyod_lab/ReCoDe-spatial-transcriptomics/analysis"
 xenium_path = Path(input_path) / "data/xenium"
-zarr_path = Path(input_path) / "xenium.zarr"
+zarr_path = Path(input_path) / "data/xenium.zarr"
 
 # Load into spatialdata format
 logging.info("Reading Xenium data...")
