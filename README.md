@@ -1,27 +1,8 @@
-<!--
-This README template is designed with dual purpose.
-
-It should help you think about and plan various aspects of your
-exemplar. In this regard, the document need not be completed in
-a single pass. Some sections will be relatively straightforward
-to complete, others may evolve over time.
-
-Once complete, this README will serve as the landing page for
-your exemplar, providing learners with an outline of what they
-can expect should they engage with the work.
-
-Recall that you are developing a software project and learning
-resource at the same time. It is important to keep this in mind
-throughout the development and plan accordingly.
--->
-
-
-<!-- Your exemplar title. Make it sound catchy! -->
 # Reproducible Spatial Transcriptomics Pipeline with RSE Best Practices
 
 <!-- A brief description of your exemplar, which may include an image -->
 This is a brief abstract of my exemplar, which includes a representative image.
-![Scikit Camera Image](docs/assets/readme-img.png)
+![Scikit Camera Image](docs/figures/nextflow-logo.png)
 
 <!-- Author information -->
 This exemplar was developed at Imperial College London by Sara Patti in
@@ -58,6 +39,7 @@ e.g. If your project uses a niche library, you could either set it as a
 requirement or make it a learning outcome above. If a learning outcome,
 you must include a relevant section that helps with learning this library.
 -->
+
 ## Prerequisites ✅
 
 ### Academic 📚
@@ -81,10 +63,6 @@ e.g. Step-by-step guide:
 4. Progress to advanced materials in the Github repository linked here.
 5. Compare with solutions available in the `solutions` folder.
 
-
-<!-- Background. Tell learners about why this exemplar is useful. -->
-## Disciplinary Background 🔬
-     
 Briefly describe how this project fits in your discipline, why you chose
 to work on it, and what other disciplines may find it useful.
 
@@ -121,68 +99,34 @@ Code is organised into logical components:
 - `docs` for documentation
 - `test` for testing scripts
 
-
-<!-- Roadmap.
-Identify the project core (a minimal working example). This
-is what you should develop first, ideally by week 6. Defining
-a core helps ensure that, despite a tight timeline, we will end
-up with a complete project.
-
-Identify project extensions. These are additional features that
-you will implement after the core of the project is finished; you
-could also propose extensions as open-ended exercises for the ReCoDE
-audience.
-
-Outline the process of creating the exemplar as a project roadmap
-with individual steps. This will help you with defining the scope of 
-the project. When you think about this, imagine that you are explaining
-it to a new PhD student. Assume that this student is from a related (but
-not necessarily same) discipline. They can code but have never undertaken
-a larger project. The steps should follow logical development of the
-project and good practice. Each will be relatively independent and contain
-its own learning annotation and links to other learning materials if
-appropriate. The learning annotation is going to form a significant portion
-of your efforts.
-
-Learning annotations will evolve as we go along but planning now will be useful
-in defining your exemplar steps. Remember that active learning is generally more
-valuable than just reading information, so small exercises that build on previous
-steps can really help your students to understand the software development process.
-You can include videos, text, charts, images, flowcharts, storyboards, or anything
-creative that you may think of.
-
-Completed tasks are marked with an x between the square brackets.
--->
 ## Roadmap 🗺️
 
-### Core 🧩
+### Preprocessing & Quality Control
 
-- [x] Data ingestion pipeline
-    * [x] Tutorial with small data exercise
-- [x] Core analysis algorithms
-    * [x] Documentation with worked example
-- [ ] Basic visualisation tools
-    * [ ] Mini-project: "Create your first plot"
-- [ ] Results export functionality
-    * [ ] Usage tutorial with export task
-    * [ ] Short video walkthrough *(planned)*
-- [ ] Automated testing suite
-    * [ ] Debugging challenge
-- [ ] Documentation for core methods
+Goal: Ensure clean, usable spatial gene expression data.
+- Run xenium output through Space Ranger or Xenium tools
+- Filter low-quality spots/cells
+- Normalize gene counts
 
-### Extensions 🔌
+### Dimensionality Reduction & Clustering
 
-- [ ] Advanced statistical models
-    * [ ] Example notebook with exercises
-- [ ] Interactive dashboard
-    * [ ] Exercise: Build a simple component
-- [ ] Multi-format data import/export
-    * [ ] Guide with hands-on tasks
-- [ ] Collaboration tools integration
-    * [ ] Exercise: Set up collaborative workflow
-    * [ ] Include diagram of workflow *(optional)*
-- [ ] Extended visualisation options
-    * [ ] Creative task: Design a custom plot
+Goal: Identify patterns and groups of similar gene expression profiles.
+- PCA + UMAP/t-SNE
+- Cluster by gene expression
+- Identify cell types with marker genes
+
+### Spatial Mapping & Visualization
+
+Goal: Map gene expression and clusters back to their spatial context.
+- Overlay expression and clusters on tissue image
+- Plot spatially enriched genes
+- Map cell types or states in space
+
+### Differential Expression & Functional Analysis
+Goal: Discover meaningful biology.
+- Spatially variable genes (SVGs)
+- DE between regions or conditions
+- Pathway or GO enrichment
 
 <!-- Data availability (remove this section if no data used) -->
 ## Data 📊
@@ -220,15 +164,3 @@ Imperial prefers BSD-3. Please update the LICENSE.md file with the current year.
 ## Licence 📄
 
 This project is licensed under the [BSD-3-Clause license](LICENSE.md).
-
-# Spatial Transcriptomics Pipeline Documentation
-
-Download Xenium data from the [FFPE Human Lung Cancer Data](https://www.10xgenomics.com/datasets/ffpe-human-lung-cancer-data-with-human-immuno-oncology-profiling-panel-and-custom-add-on-1-standard).
-
-Data is generated using the 10x Genomics Xenium platform. The data is for human lung cancer tissue. The panel includes 380 genes from the Xenium Human Immuno-Oncology Profiling Panel with custom add-on.
-
-
-Analysis framework is based on the [Squidpy](https://squidpy.readthedocs.io/en/stable/) library, which is a Python library for spatial omics data analysis. Squidpy is built on top of the [Scanpy](https://scanpy.readthedocs.io/en/stable/) library, which is a widely used library for single-cell RNA-seq data analysis.
-The analysis framework is designed to be modular and extensible, allowing users to easily add new features and functionality as needed. The code is organized into several modules, each of which is responsible for a specific aspect of the analysis pipeline.
-
-The original tutorials are linked here: [Xenium tutorual](https://squidpy.readthedocs.io/en/stable/notebooks/tutorials/tutorial_xenium.html)
