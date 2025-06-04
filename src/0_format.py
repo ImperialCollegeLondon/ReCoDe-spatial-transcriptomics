@@ -1,4 +1,5 @@
 # Import packages
+import os
 import warnings  # ? what is the best way to suppress warnings from package inputs?
 import logging
 from pathlib import Path
@@ -8,15 +9,16 @@ from spatialdata_io import xenium
 warnings.filterwarnings("ignore")
 
 # Set directories
-input_path = "/Users/sarapatti/Desktop/PhD_projects/Llyod_lab/ReCoDe-spatial-transcriptomics"
-output_path = "/Users/sarapatti/Desktop/PhD_projects/Llyod_lab/ReCoDe-spatial-transcriptomics/analysis"
-xenium_path = Path(input_path) / "data/xenium"
-zarr_path = Path(input_path) / "data/xenium.zarr"
-logging_path = "/Users/sarapatti/Desktop/PhD_projects/Llyod_lab/ReCoDe-spatial-transcriptomics/analysis/logging"
+base_dir = Path(os.getenv("RECODE_BASE_DIR"))
+input_path = base_dir
+output_path = base_dir / "analysis"
+logging_path = output_path / "logging"
+xenium_path = input_path / "data/xenium"
+zarr_path = base_dir / "data" / "xenium.zarr"
 
 # Set up logging
 logging.basicConfig(
-    filename=Path(logging_path) / "0_format.txt",  # output file
+    filename=logging_path / "0_format.txt",  # output file
     filemode="w",  # overwrites the file each time
     format="%(asctime)s - %(levelname)s - %(message)s",  # log format
     level=logging.INFO,  # minimum level to log
