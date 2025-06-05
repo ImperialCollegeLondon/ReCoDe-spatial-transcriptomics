@@ -13,7 +13,7 @@ import seaborn as sns
 import spatialdata as sd
 
 from recode_st.helper_function import seed_everything
-from recode_st.paths import base_dir, logging_path, output_path, zarr_path
+from recode_st.paths import logging_path, output_path, zarr_path
 
 warnings.filterwarnings("ignore")
 
@@ -56,15 +56,11 @@ if __name__ == "__main__":
     # $ Calculate and plot metrics
 
     # Calculate quality control metrics
-    sc.pp.calculate_qc_metrics(
-        adata, percent_top=(10, 20, 50, 150), inplace=True
-    )
+    sc.pp.calculate_qc_metrics(adata, percent_top=(10, 20, 50, 150), inplace=True)
 
     # Calculate percent negative DNA probe and percent negative decoding count
     cprobes = (
-        adata.obs["control_probe_counts"].sum()
-        / adata.obs["total_counts"].sum()
-        * 100
+        adata.obs["control_probe_counts"].sum() / adata.obs["total_counts"].sum() * 100
     )
     cwords = (
         adata.obs["control_codeword_counts"].sum()
@@ -79,9 +75,7 @@ if __name__ == "__main__":
     logging.info(f"Average number of transcripts per cell: {avg_total_counts}")
 
     avg_total_unique_counts = np.mean(adata.obs["n_genes_by_counts"])
-    logging.info(
-        f"Average unique transcripts per cell: {avg_total_unique_counts}"
-    )
+    logging.info(f"Average unique transcripts per cell: {avg_total_unique_counts}")
 
     area_max = np.max(adata.obs["cell_area"])
     area_min = np.min(adata.obs["cell_area"])

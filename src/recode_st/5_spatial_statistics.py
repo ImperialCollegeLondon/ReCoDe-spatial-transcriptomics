@@ -1,27 +1,24 @@
 """Spatial statistics module."""
 
-# Import packages
 import logging
 import os
+import warnings
 from pathlib import Path
 
 import scanpy as sc
 import squidpy as sq
 
-from .paths import base_dir, logging_path, output_path
+from recode_st.paths import logging_path, output_path
+
+warnings.filterwarnings("ignore")
 
 if __name__ == "__main__":
     # Set variables
     module_name = "5_spatial_stats"  # name of the module
-
-    # Confirm directories exist
-    if not Path(base_dir).exists():
-        raise FileNotFoundError(f"Input path {base_dir} does not exist.")
-    if not Path(output_path).exists():
-        raise FileNotFoundError(f"Output path {output_path} does not exist.")
+    module_dir = output_path / module_name
 
     # Create output directories if they do not exist
-    os.makedirs(Path(output_path) / module_name, exist_ok=True)
+    module_dir.mkdir(exist_ok=True)
 
     # Set up logging
     os.makedirs(
@@ -35,13 +32,12 @@ if __name__ == "__main__":
     )
 
     # change directory to output_path/module_name
-    os.chdir(
-        Path(output_path) / module_name
-    )  # need to so plots save in the correct directory
+    os.chdir(module_dir)
+    logging.info(f"Changed directory to {module_dir}")
 
     # Import data
     logging.info("Loading Xenium data...")
-    adata = sc.read_h5ad(Path(output_path) / "4_view_images/adata.h5ad")
+    adata = sc.read_h5ad(module_dir / "4_view_images/adata.h5ad")
 
     # $ Calculate spatial statistics
 
@@ -111,4 +107,5 @@ if __name__ == "__main__":
 
     # Save anndata object
     adata.write_h5ad(Path(output_path) / f"{module_name}/adata.h5ad")
-    logging.info(f"Data saved to {module_name}/adata.h5ad")
+    logging.info(f"Data saved to {module_dir / 'adata.h5ad'}")
+    logging.info("Spatial statistics module completed successfully.")

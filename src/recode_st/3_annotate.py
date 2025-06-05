@@ -10,7 +10,7 @@ from pathlib import Path
 import pandas as pd
 import scanpy as sc
 
-from .paths import base_dir, logging_path, output_path
+from .paths import logging_path, output_path
 
 warnings.filterwarnings("ignore")
 
@@ -22,15 +22,10 @@ if __name__ == "__main__":
 
     # Set variables
     module_name = "3_annotate"
-
-    # Confirm directories exist
-    if not Path(base_dir).exists():
-        raise FileNotFoundError(f"Input path {base_dir} does not exist.")
-    if not Path(output_path).exists():
-        raise FileNotFoundError(f"Output path {output_path} does not exist.")
+    module_dir = output_path / module_name
 
     # Create output directories if they do not exist
-    os.makedirs(Path(output_path) / module_name, exist_ok=True)
+    module_dir.mkdir(exist_ok=True)
 
     # Set up logging
     os.makedirs(
@@ -45,12 +40,11 @@ if __name__ == "__main__":
 
     # Import data
     logging.info("Loading Xenium data...")
-    adata = sc.read_h5ad(Path(output_path) / "2_DR/adata.h5ad")
+    adata = sc.read_h5ad(output_path / "2_DR/adata.h5ad")
 
     # change directory to output_path/module_name
-    os.chdir(
-        Path(output_path) / module_name
-    )  # need to so plots save in the correct directory
+    os.chdir(module_dir)
+    logging.info(f"Changed directory to {module_dir}")
 
     # Annotate cell clusters
     # Calculate the differentially expressed genes for every cluster,
@@ -89,7 +83,7 @@ if __name__ == "__main__":
     markers = sc.get.rank_genes_groups_df(adata, None)
     markers = markers[(markers["pvals_adj"] < 0.05) & (markers["logfoldchanges"] > 0.5)]
     markers.to_excel(
-        Path(output_path) / module_name / "markers.xlsx",
+        module_dir / "markers.xlsx",
         index=False,
     )
 
@@ -113,16 +107,14 @@ if __name__ == "__main__":
     diff_gene_df = pd.concat(list, axis=1).T
     diff_gene_df.set_index(diff_gene_df.columns[0], inplace=True)
     diff_gene_df.to_csv(
-        Path(output_path) / module_name / "top_differentially_expressed_genes.csv",
+        module_dir / "top_differentially_expressed_genes.csv",
         index=True,
     )
 
     logging.info("File 3...")
     # Create a dictionary to store DataFrames for each cluster
     cluster_dict = {}
-    os.makedirs(
-        os.path.join(output_path, module_name, "cluster_diff_genes"), exist_ok=True
-    )
+    os.makedirs(os.path.join(module_dir, "cluster_diff_genes"), exist_ok=True)
     for cluster_number in range(clusters_list):
         # print(cluster_number)
         current_cluster = markers[markers["group"] == str(cluster_number)].sort_values(
@@ -155,5 +147,6 @@ if __name__ == "__main__":
     )  # Map the cluster names to the cell_type column
 
     # Save anndata object
-    adata.write_h5ad(Path(output_path) / f"{module_name}/adata.h5ad")
-    logging.info(f"Data saved to {module_name}/adata.h5ad")
+    adata.write_h5ad(module_dir / "adata.h5ad")
+    logging.info(f"Data saved to {module_dir / 'adata.h5ad'}")
+    logging.info("Annotation module completed successfully.")

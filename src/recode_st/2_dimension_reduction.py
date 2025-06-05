@@ -3,14 +3,14 @@
 # Import packages
 import logging
 import os
-import warnings  # ? what is the best way to suppress warnings from package inputs?
+import warnings
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import scanpy as sc
 import squidpy as sq
 
-from .paths import base_dir, logging_path, output_path
+from recode_st.paths import logging_path, output_path
 
 warnings.filterwarnings("ignore")
 
@@ -22,15 +22,10 @@ if __name__ == "__main__":
 
     # Set variables
     module_name = "2_DR"
-
-    # Confirm directories exist
-    if not Path(base_dir).exists():
-        raise FileNotFoundError(f"Input path {base_dir} does not exist.")
-    if not Path(output_path).exists():
-        raise FileNotFoundError(f"Output path {output_path} does not exist.")
+    module_dir = output_path / module_name
 
     # Create output directories if they do not exist
-    os.makedirs(Path(output_path) / module_name, exist_ok=True)
+    module_dir.mkdir(exist_ok=True)
 
     # Set up logging
     os.makedirs(
@@ -45,7 +40,7 @@ if __name__ == "__main__":
 
     # Import data
     logging.info("Loading Xenium data...")
-    adata = sc.read_h5ad(Path(output_path) / "1_qc/adata.h5ad")
+    adata = sc.read_h5ad(output_path / "1_qc/adata.h5ad")
 
     # Perform dimension reduction analysis
     logging.info("Compute PCA...")
@@ -53,7 +48,7 @@ if __name__ == "__main__":
     sc.pl.pca_variance_ratio(adata, log=True, n_pcs=50)
     plt.tight_layout()
     plt.savefig(
-        Path(output_path) / module_name / "pca_variance_ratio.png"
+        module_dir / "pca_variance_ratio.png"
     )  # save the figure with the module name
 
     logging.info("Compute neighbors...")
@@ -68,7 +63,8 @@ if __name__ == "__main__":
     )  # name leiden clusters
 
     # change directory to output_path/module_name
-    os.chdir(Path(output_path) / module_name)
+    os.chdir(module_dir)
+    logging.info(f"Changed directory to {module_dir}")
 
     # plot UMAP
     logging.info("Plotting UMAPs...")
@@ -98,5 +94,5 @@ if __name__ == "__main__":
     )
 
     # Save anndata object
-    adata.write_h5ad(Path(output_path) / f"{module_name}/adata.h5ad")
-    logging.info(f"Data saved to {module_name}/adata.h5ad")
+    adata.write_h5ad(module_dir / "adata.h5ad")
+    logging.info(f"Data saved to {module_dir / 'adata.h5ad'}")
