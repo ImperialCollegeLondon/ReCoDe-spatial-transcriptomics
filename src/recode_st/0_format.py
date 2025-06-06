@@ -1,31 +1,38 @@
 """Module for formatting Xenium data into Zarr format."""
 
-# Import packages
-import logging
-import warnings  # ? what is the best way to suppress warnings from package inputs?
+import warnings
+from logging import getLogger
+from pathlib import Path
 
 from spatialdata_io import xenium
 
-from .paths import logging_path, xenium_path, zarr_path
+from recode_st.logging_config import configure_logging
+from recode_st.paths import xenium_path, zarr_path
 
 warnings.filterwarnings("ignore")
 
-if __name__ == "__main__":
-    # Set up logging
-    logging.basicConfig(
-        filename=logging_path / "0_format.txt",  # output file
-        filemode="w",  # overwrites the file each time
-        format="%(asctime)s - %(levelname)s - %(message)s",  # log format
-        level=logging.INFO,  # minimum level to log
-    )
+logger = getLogger(__name__)
 
-    # Load into spatialdata format
-    logging.info("Reading Xenium data...")
+
+def convert_xenium_to_zarr(xenium_path: Path, zarr_path: Path):
+    """Convert Xenium data to Zarr format."""
+    # Load Xenium data
+    logger.info("Reading Xenium data...")
     sdata = xenium(xenium_path)
 
-    # Convert to zarr format
-    logging.info("Writing to Zarr...")
+    # Write to Zarr format
+    logger.info("Writing to Zarr...")
     sdata.write(zarr_path)
 
-    # Convert to zarr format
-    logging.info("Finished formatting data.")
+    logger.info("Finished formatting data.")
+
+
+if __name__ == "__main__":
+    # Set up logger
+    configure_logging()
+    logger = getLogger("recode_st.0_format")  # re-name the logger to match the module
+
+    try:
+        convert_xenium_to_zarr(xenium_path, zarr_path)
+    except FileNotFoundError as err:
+        logger.error(f"File not found: {err}")

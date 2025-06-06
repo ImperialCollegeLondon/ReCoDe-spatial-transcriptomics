@@ -8,7 +8,7 @@ data_path = base_dir / "data"
 output_path = base_dir / "analysis"
 xenium_path = data_path / "xenium"
 zarr_path = data_path / "xenium.zarr"
-logging_path = output_path / "logging"
+logging_path = output_path / "logs"
 
 # Confirm directories exist
 if not Path(base_dir).exists():
