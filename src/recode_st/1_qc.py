@@ -121,7 +121,7 @@ if __name__ == "__main__":
         dpi=300,
     )
     plt.close()
-    logging.info(f"Saved plots to {module_dir /'cell_summary_histograms.png'}")
+    logging.info(f"Saved plots to {module_dir / 'cell_summary_histograms.png'}")
 
     # $ QC data #
 
