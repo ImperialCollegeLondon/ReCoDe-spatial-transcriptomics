@@ -15,11 +15,11 @@ if not Path(base_dir).exists():
     raise FileNotFoundError(f"Input path {base_dir} does not exist.")
 if not Path(data_path).exists():
     raise FileNotFoundError(f"Input path {base_dir} does not exist.")
-if not Path(zarr_path).exists():
-    raise FileNotFoundError(f"Input path {base_dir} does not exist.")
 
 # Make sure output directories exist
 if not Path(output_path).exists():
     output_path.mkdir(parents=True, exist_ok=True)
 if not Path(logging_path).exists():
+    logging_path.mkdir(parents=True, exist_ok=True)
+if not Path(zarr_path).exists():
     logging_path.mkdir(parents=True, exist_ok=True)
