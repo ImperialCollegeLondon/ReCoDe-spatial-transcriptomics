@@ -8,9 +8,9 @@ version = "0.1.0"
 
 dependencies = [
     "matplotlib",
-    "numpy",
+    "numpy<2",
     "pandas[excel]",
-    "torch",
+    "torch<2.3",
     "scanpy[leiden]",
     "spatialdata-io",
     "squidpy",
