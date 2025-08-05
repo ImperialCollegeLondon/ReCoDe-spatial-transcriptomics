@@ -17,11 +17,11 @@ The best practices included are key for producing high-quality code that can be 
 
 ## Version control (git and Github)
 
-Version control is a system that records changes to files over time so that you can recall specific versions later. It is essential for collaborative work, allowing multiple people to work on the same codebase without conflicts. The most widely used version control system`git`, which is a *software*. `Github` is a *web-based platform* that uses git for version control and collaboration.
+Version control is a system that records changes to files over time so that you can recall specific versions later. It is essential for collaborative work, allowing multiple people to work on the same codebase without conflicts. The most widely used version control system is `git`, which is a command line tool *software*. `Github` is a *web-based platform* that uses git for version control and collaboration.
 
 This platform allows users to store, share, and collaborate on software projects in folders called `repositories`. GitHub programmers can work together to create and improve programs, sharing their work with others to use and build upon, facilitating open source projects. Open source refers to software whose code is freely available for anyone to use, modify, and distribute. This promotes collaboration and transparency in software development by allowing communities to contribute improvements and innovations collectively.
 
-Git can be installed here [git-scm.com](https://git-scm.com/). In order to use git and Github, you must install git on your computer and create a Github account. You can create a Github account here [github.com](https://github.com/).
+Git comes pre-installed on Linux and is available on MacOS with the [Xcode command line tools](https://developer.apple.com/xcode/resources/), it can also be installed from [git-scm.com](https://git-scm.com/). In order to use git and Github, you must install git on your computer and create a Github account. You can create a Github account here [github.com](https://github.com/).
 
 ## Virtual environments
 
@@ -29,7 +29,7 @@ Virtual environments (e.g. Anaconda, venv) are isolated environments that allow 
 
 ### Anaconda
 
-Anaconda is a popular distribution of Python and R for scientific computing and data science. It includes a package manager called `conda` that simplifies the process of managing packages and environments. `Package Management Systems` are tools used to install and keep track of the software (and critically versions of software) used on a system and can export files specifying these required software packages/versions.
+[Anaconda](https://www.anaconda.com) is a popular distribution of Python and R for scientific computing and data science. It includes a package manager called `conda` that simplifies the process of managing packages and environments. `Package Management Systems` are tools used to install and keep track of the software (and critically versions of software) used on a system and can export files specifying these required software packages/versions.
 
 In addition to the package manager, Anaconda also includes a collection of pre-installed packages commonly used in data science, such as NumPy, pandas, and Matplotlib. This makes it easier to get started with data analysis and scientific computing without having to install each package individually. A user can download either `Anaconda` or `Miniconda`, which is a smaller version of Anaconda that includes only the conda package manager and Python.
 
@@ -40,7 +40,7 @@ In addition to the package manager, Anaconda also includes a collection of pre-i
 To create a virtual environment with conda, you can use the following command in your terminal:
 
 ```bash
-conda create --name myenv python=3.9
+conda create --name myenv python=3.12
 ```
 
 This command creates a new environment named `myenv` with Python version 3.9.
@@ -58,7 +58,7 @@ conda deactivate
 
 ### Virtual environments with venv
 
-`venv` is a built-in module in Python that allows you to create lightweight virtual environments. It is a simpler alternative to Anaconda for managing Python environments. It does not require any additional installations beyond Python itself.
+[`venv`](https://docs.python.org/3/library/venv.html) is a built-in [module](https://docs.python.org/3/tutorial/modules.html) in Python that allows you to create lightweight virtual environments. It is a simpler alternative to Anaconda for managing Python environments. It does not require any additional installations beyond Python itself.
 
 #### Creating a virtual environment with venv
 
@@ -166,7 +166,6 @@ analysis_pipeline/
 ├── data_cleaning
 ├── feature_engineering
 ├── model_training
-├── evaluation
 └── evaluation
 ```
 
@@ -235,11 +234,12 @@ def add(a, b):
     Adds two numbers.
 
     Args:
-        a (int or float): The first number.
-        b (int or float): The second number.
+        a: The first number.
+        b: The second number.
 
     Returns:
-        int or float: The sum of the two numbers.
+        The sum of the two numbers.
+
     """
     return a + b
 ```
@@ -265,19 +265,18 @@ def add(a: int, b: int) -> int:
     """
     Adds two integers.
 
-    Args:
-        a (int): The first number.
-        b (int): The second number.
+        a: The first number.
+        b: The second number.
 
     Returns:
-        int: The sum of the two numbers.
+        The sum of the two numbers.
     """
     return a + b # add two integers and return the result
 ```
 
 ## Code style, linters, and code formatters
 
-PEP 8 is the style guide for Python code, providing conventions for writing clean and readable code. Following a consistent style improves code readability and maintainability, making it easier for others to understand and contribute to your code.
+PEP 8 is the style guide for Python code, providing conventions for writing clean and readable code. Following a consistent style improves code readability and maintainability, making it easier for others to understand and contribute to your code. There are several tools available to help enforce PEP 8 style guidelines, such as linters and code formatters.
 
 The full python style guide can be found here: [PEP 8](https://peps.python.org/pep-0008/).
 
@@ -288,9 +287,8 @@ We've highlighted some of the key points below:
 - **Blank Lines**: Use blank lines to separate functions and classes, and to separate sections within functions. Use two blank lines before top-level function and class definitions, and one blank line between methods in a class.
 - **Imports**: Imports should be on separate lines and grouped in the following order: standard library imports, related third-party imports, local application/library-specific imports. Each group should be separated by a blank line.
 - **Naming Conventions**: Use descriptive names for variables, functions, and classes. Use lowercase words separated by underscores for function and variable names (e.g., `my_function`), and use CamelCase for class names (e.g., `MyClass`). Constants should be written in all uppercase letters with underscores (e.g., `MY_CONSTANT`).
-- **Whitespace**: Avoid extraneous whitespace in expressions and statements. For example, do not use spaces around the `=` sign when assigning a value to a variable, but do use spaces around operators (e.g., `x = 1 + 2` is correct, but `x=1 + 2` is not).
 
-You do not need to memorize all of these rules, but it is important to be aware of them and to use a linter to check your code for style violations. A `linter` is a tool that automatically checks your code for style and syntax errors. For Python, you can use `flake8` or `pylint` as linters. We recommend using `ruff`, which is a fast and highly configurable linter that can be used to enforce PEP 8 style guidelines and other coding standards.
+You do not need to memorize all of these rules, but it is important to be aware of them and to use a formatter and a linter to check your code for style violations. A "formatter" is a tool that automatically formats your code to fit a style guide. A "linter" is a tool that checks your code for style and syntax errors. For Python, you can use `black` as a formatter and `flake8` or `pylint` as linters. We recommend using `ruff`, which is *both* a formatter *and* a linter and is fast and highly configurable. It can be used to enforce PEP 8 style guidelines and other coding standards.
 
 To install linters and use them in VSCode, you can follow these steps:
 
@@ -298,20 +296,20 @@ To install linters and use them in VSCode, you can follow these steps:
         ```bash
         pip install ruff
         ```
-2. Open VSCode and go **to the settings (File > Preferences > Settings).
+2. Open VSCode and go to the settings (File > Preferences > Settings).
 3. Search for "Python Linting" and enable it.
-4. Set the linter you want to use (e.g., ruff) in the settings. You can also choose the version of Python you want to use for linting.**
+4. Set the linter you want to use (e.g., ruff) in the settings. You can also choose the version of Python you want to use for linting.
 5. Save your settings and restart VSCode.
 
 ## Continuous integration
 
-Continuous integration (CI) is a software development practice where code changes are automatically tested and integrated into the main codebase.  It is a workflow that allows developers to automatically run tests and checks on their code before it is merged into the main branch. This helps catch errors early, ensures that the codebase remains stable, ensure that the code is of high quality and meets the project's standards.
+Continuous integration (CI) is a software development practice where code changes are automatically tested and integrated into the main codebase.  It is conducted via workflows that allow developers to automatically run tests and checks on their code. This is often done on suggested code changes before they are merged into the main branch. This helps catch errors early, ensuring that the codebase remains stable and is of high quality and meets the project's standards.
 
 CI is usually done using a CI tool, such as GitHub Actions, that can automatically run tests, check code style, and perform other checks on your code whenever you push changes to the repository. These tests can include unit tests, integration tests, and other types of tests that ensure your code works as expected. Users will specify the tests they want to run in a configuration file, which is then used by the CI tool to run the workflow automatically.
 
 ### Github Actions
 
-GitHub Actions is a platform that allows you to automate developer workflows directly within your GitHub repository. The workflows are made up of individual tasks called actions, which can be combined to create a complete workflow. You can use workflow templates to quickly set up common workflows, such as running tests, building code, or deploying applications. You can define workflows in YAML files that specify the steps to be executed when certain events occur.
+[GitHub Actions](https://docs.github.com/en/actions) is a platform that allows you to automate developer workflows directly within your GitHub repository. The workflows are made up of individual tasks called actions, which can be combined to create a complete workflow. You can use workflow templates to quickly set up common workflows, such as running tests, building code, or deploying applications. You can define workflows in YAML files that specify the steps to be executed when certain events occur.
 
 In this Exemplar, we have a `.github/workflows/ci.yml` file that defines a CI workflow. This workflow is triggered on every push and pull request to the main branch. It runs tests using `pytest`, checks code style with `ruff`, and builds the documentation using `mkdocs`. We also have additional workflows for testing markdown files links are working in the `.github/workflows/link_checker.yml`.
 
@@ -323,11 +321,12 @@ Automatic docs documentation generation is also a common practice in software de
 
 In this Exemplar, we used several CI tools. Below we have highlighted a few you might find useful:
 
-- Publish MkDocs to create a static website for documentation (`.github/workflows/doc.yml`)
-- Link Checker to check that all links in the documentation are working (`.github/workflows/link_checker.yml`)
-- Pre-commit to automatically run code quality checks and enforce coding standards before code is committed to the repository
+- Run tests using `pytest` and checks documentation build correctly using `mkdocs` (`.github/workflows/ci.yml`). Triggered on every push to the main branch and every pull request.
+- Publish MkDocs to create a static website for documentation (`.github/workflows/doc.yml`). Triggered on every push to the main branch.
+- Link Checker to check that all links in the documentation are working (`.github/workflows/link_checker.yml`). Triggered on every push to the main branch and every pull request.
+- Pre-commit CI to automatically run code quality checks and enforce coding standards before code is committed to the repository. Triggered on every push to the main branch and every pull request.
 
-In order to use the tools, you will need to create a .yml file in .github/workflow folder. Copy the contents from the pre-existing .yml file below and paste it into your new .yml file. You can then edit the file to suit your needs.
+In order to use the tools, you will need to create a `.yml` file in the `.github/workflow` folder. Copy the contents from the pre-existing `.yml` file below and paste it into your new .yml file. You can then edit the file to suit your needs.
 
 To see all the CI tools and workflows used and their .yml files, please look in the `.github/workflows/` folder.
 
@@ -335,9 +334,11 @@ To see all the CI tools and workflows used and their .yml files, please look in 
 
 In order to use `pre-commit` in your project, you will need to install pre-commit and create a `.pre-commit-config.yaml` file in the root of your repository.
 
-`pre-commit` is a CI tool which automates code quality checks and enforces coding standards. It automatically points out issues in code such as missing semicolons, trailing whitespace, and debug statements.
+`pre-commit` is a tool which automates code quality checks to enforce coding standards before a git commit is completed. It is highly configurable and can be used to run multiple different tools. Along with code formatters and linters (described above), it can find issues in code such as missing semicolons, trailing whitespace, and debug statements.
 
-Pre-commit hooks are scripts that run automatically before a commit is made, allowing you to catch errors and enforce coding standards before code is added to the repository. This helps maintain code quality and consistency across the project. Learn more about pre-commit hooks in the [pre-commit documentation](https://pre-commit.com/).
+Pre-commit does this via [git hooks](https://git-scm.com/book/ms/v2/Customizing-Git-Git-Hooks), which enables running scripts automatically before a commit is made, catching errors before code is added to the repository. This helps maintain code quality and consistency across the project. Learn more about pre-commit hooks in the [pre-commit documentation](https://pre-commit.com/).
+
+Additionally, there is a separate, related tool called [pre-commit ci](https://pre-commit.ci) that runs the pre-commit hooks in CI. This means that after code is pushed to a GitHub repo, these code quality checks will be run automatically. It also automatically updates the versions of the pre-commit hooks as new versions become available.
 
 To use `pre-commit` in your project follow the following steps:
 
@@ -365,11 +366,6 @@ Here is an example configuration that includes `pre-commit` for linting and `ruf
             - id: debug-statements
             - id: trailing-whitespace
             - id: end-of-file-fixer
-        - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-            rev: v2.15.0
-            hooks:
-            - id: pretty-format-yaml
-                args: [--autofix, --indent, '2', --offset, '2']
         - repo: https://github.com/astral-sh/ruff-pre-commit
             rev: v0.12.3
             hooks:
@@ -395,13 +391,15 @@ Pydantic is explained in more detail in the [Configuration Guide](docs/configura
 
 ## Code testing
 
-Code testing is the practice of writing tests to verify that your code behaves as expected. This is crucial for ensuring code quality and catching bugs early in the development process. There are several types of tests, including unit tests, integration tests, and end-to-end tests.
+Code testing is the practice of writing tests to verify that your code behaves as expected. This is crucial for ensuring code quality and catching bugs early in the development process. There are several types of tests, including:
 
-Unit tests are used to test individual functions or methods in isolation, while integration tests check how different components of the code work together. End-to-end tests simulate real user interactions with the software to ensure that the entire system works as expected.
+- **Unit tests:** To test individual functions or methods in isolation
+- **Integration tests:** To check how different components of the code work together.
+- **End-to-end tests:** To simulate real user interactions with the software to ensure that the entire system works as expected.
 
 To write tests in Python, you can use the built-in `unittest` module or third-party libraries like `pytest`. These libraries provide tools for writing and running tests, as well as assertions to check the expected behavior of your code.
 
-To write a simple unit test using `unittest` or `pytest`, you can follow this example:
+To write a simple unit test using `pytest`, you can follow this example:
 
 1. Write a function to be tested using Python and pytest
 
@@ -425,8 +423,8 @@ To write a simple unit test using `unittest` or `pytest`, you can follow this ex
         assert add(0, 0) == 0
     ```
 
-2. Save this to a file labeled test_function_name.py (e.g test_add.py)
-3. Run the test from the command line
+2. Save this to a file labeled `test_function_name.py` (e.g `test_add.py`)
+3. Run the test from the command line (note this will require that `pytest` is installed, e.g. with `pip install pytest`)
 
     ```bash
     pytest test_add.py
