@@ -7,8 +7,6 @@ This exemplar details an analysis pipeline for spatial transcriptomics (10X Xeni
 
 ### Spatial transcriptomics
 
-<!-- TODO: Add description of what ST is -->
-
 Below is representative image of spatial transcriptomics data.
 ![ST Lung cancer FFPE](docs/assets/readme_image.png)
 
@@ -305,7 +303,7 @@ and more...
 - Modularity and modularization
 - Code documentation
 - Code style, linters, and code formatters
-- Continuous integration and continuous deployments
+- Continuous integration and continuous deployment
 - Code testing
 - Configuration management with [Pydantic](https://docs.pydantic.dev/latest/)
 
