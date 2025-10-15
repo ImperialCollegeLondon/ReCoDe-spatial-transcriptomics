@@ -224,7 +224,7 @@ def main(argv=None):
 
     for subdir_name in os.listdir(os.path.abspath(args.data_dir)):
         subdir = os.path.join(os.path.abspath(args.data_dir), subdir_name)
-        
+
         data_dir = Path(os.path.abspath(subdir))
         if not data_dir.exists():
             logging.error('Data directory does not exist: %s', data_dir)
