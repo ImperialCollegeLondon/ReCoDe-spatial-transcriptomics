@@ -30,7 +30,7 @@ norm_approach = "cell_area"       # Normalization approach to use
 [modules.dimension_reduction]
 module_name = "2_dimension_reduction" # Name of the module - will be used in the output directory name
 norm_approach = "cell_area"           # Normalization approach to use
-subsample_data = true                 # Whether to subsample the data for development purposes
+subsample_data = false                # Whether to subsample the data for development purposes
 n_comps = 30                          # number of principal components to compute
 n_neighbors = 30                      # number of neighbors for the neighborhood graph
 resolution = 0.5                      # resolution for leiden clustering
