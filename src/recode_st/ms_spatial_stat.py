@@ -6,12 +6,13 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
+import seaborn as sns
 
 from recode_st.config import IOConfig, MuspanSpatialStatModuleConfig
-from recode_st.helper_function import seed_everything
-from recode_st.logging_config import configure_logging
+from recode_st.helper_function import configure_scanpy_figures
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 logger = getLogger(__name__)
 
@@ -142,6 +143,10 @@ def run_muspan_stats(config: MuspanSpatialStatModuleConfig, io_config: IOConfig)
     module_dir = io_config.output_dir / config.module_name
     module_dir.mkdir(exist_ok=True)
 
+    # Set figure settings to ensure consistency across all modules
+    configure_scanpy_figures(str(io_config.output_dir))
+    cmap = sns.color_palette("Spectral", as_cmap=True)
+
     # Load MuSpAn object
     logger.info("Loading MuSpAn object...")
     domain = ms.io.load_domain(path_to_domain=str(module_dir / config.muspan_object))
@@ -172,22 +177,3 @@ def run_muspan_stats(config: MuspanSpatialStatModuleConfig, io_config: IOConfig)
         cluster_labels=cluster_labels,
         unique_clusters=unique_clusters,
     )
-
-
-if __name__ == "__main__":
-    configure_logging()
-    logger = getLogger("recode_st.ms_spatial_stat")
-
-    seed_everything(21122023)
-
-    try:
-        run_muspan_stats(
-            MuspanSpatialStatModuleConfig(
-                module_name="6_muspan",
-                muspan_object="muspan_object.muspan",
-                cluster_labels="cell_type",
-            ),
-            IOConfig(),
-        )
-    except FileNotFoundError as err:
-        logger.error(f"File not found: {err}")

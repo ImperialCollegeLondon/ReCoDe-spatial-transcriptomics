@@ -5,12 +5,13 @@ from logging import getLogger
 
 import matplotlib.pyplot as plt
 import scanpy as sc
+import seaborn as sns
 
 from recode_st.config import IOConfig, MuspanModuleConfig
-from recode_st.helper_function import seed_everything
-from recode_st.logging_config import configure_logging
+from recode_st.helper_function import configure_scanpy_figures
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 logger = getLogger(__name__)
 
@@ -37,6 +38,10 @@ def run_muspan(config: MuspanModuleConfig, io_config: IOConfig):
 
     # Create output directories if they do not exist
     module_dir.mkdir(exist_ok=True)
+
+    # Set figure settings to ensure consistency across all modules
+    configure_scanpy_figures(str(io_config.output_dir))
+    cmap = sns.color_palette("Spectral", as_cmap=True)
 
     # Import data
     logger.info("Loading Xenium data...")
@@ -238,17 +243,3 @@ def map_cell_types_to_domain(adata, domain, adata_cell_id, cluster_labels):
 
     # Return muspan domain with cell types mapped
     return domain
-
-
-if __name__ == "__main__":
-    # Set up logger
-    configure_logging()
-    logger = getLogger("recode_st.6_muspan")  # re-name the logger to match the module
-
-    # Set seed
-    seed_everything(21122023)
-
-    try:
-        run_muspan(MuspanModuleConfig(module_name="6_muspan"), IOConfig())
-    except FileNotFoundError as err:
-        logger.error(f"File not found: {err}")

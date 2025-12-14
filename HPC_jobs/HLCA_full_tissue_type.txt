@@ -1,0 +1,141 @@
+tissue_coarse_unharmonized distribution:
+tissue_coarse_unharmonized
+parenchyma              455629
+airway                  218015
+nose                    160397
+Trachea                  20411
+Intermediate Bronchi     18658
+Inferior turbinate       18126
+Distal Bronchi           17292
+segmental_bronchi         9010
+Name: count, dtype: int64
+----------
+tissue_detailed_unharmonized distribution:
+tissue_detailed_unharmonized
+Lower left lobe                                       68321
+right bronchus (intermediate)                         55806
+right inferior turbinate                              45557
+side unknown, lower lobe                              41220
+trachea                                               33593
+right upper lobe                                      29677
+Upper left lobe                                       25485
+Trachea                                               24166
+parenchyma                                            22734
+lobar_bronchi                                         22160
+left lung, superior lobe, apical-posterior segment    18612
+right middle lobe, alveolar region                    18541
+4th generation airway                                 18038
+Parenchyma                                            17222
+2nd-3rd generation airway                             16980
+left lower lobe, alveolar region                      16898
+Lower inferior turbinate                              14596
+anterior carina                                       11549
+right middle lobe, bronchioles                        10251
+upper left lobe                                        9822
+left main bronchus                                     9417
+lower right lobe                                       9137
+segmental_bronchi                                      9010
+posterior carina                                       8862
+right lobe                                             7821
+left lower lobe, bronchi                               7769
+lower left lobe                                        7718
+left upper lobe, alveolar region                       7523
+left lobe                                              7122
+middle right lobe                                      5976
+upper lobe                                             5923
+upper right lobe                                       5619
+parenchyma left lower lobe                             5348
+left lower lobe                                        4516
+lower lobe                                             4249
+Lower right lobe                                       4146
+right lower lobe                                       3966
+## lobe                                                3183
+parenchyma right upper lobe                            2269
+Bronchi                                                 445
+parenchyma right middle lobe                            399
+Name: count, dtype: int64
+----------
+tissue_dissociation_protocol distribution:
+tissue_dissociation_protocol
+Collagenase D + DNAse             224250
+Dispase + collagenase             121894
+Cold protease 1h                  120044
+Collagenase + Elastase + DNAse     60982
+Cold protease overnight            33593
+Collagenase A + DNAse              24181
+Name: count, dtype: int64
+----------
+tissue_level_2 distribution:
+tissue_level_2
+parenchyma lower lobe           118634
+inferior turbinate               78279
+lobular bronchi                  74464
+parenchyma upper lobe            61735
+trachea                          54004
+distal lobular airways           27543
+parenchyma right middle lobe     18541
+left or right main bronchus       9417
+segmental bronchi                 7769
+Name: count, dtype: int64
+----------
+tissue_level_3 distribution:
+tissue_level_3
+parenchyma left lower lobe          65053
+inferior turbinate right nostril    53378
+parenchyma right upper lobe         29677
+parenchyma left upper lobe          26135
+distal airways middle right lobe    16227
+parenchyma right lower lobe          8112
+inferior turbinate left nostril      7122
+lobular bronchi upper left lobe      7049
+lobular bronchi lower right lobe     5056
+distal airways lower right lobe      4081
+lobular bronchi lower left lobe      3411
+lobular bronchi upper right lobe     3142
+distal airways upper left lobe       2773
+distal airways upper right lobe      2477
+distal airways lower left lobe       1985
+Name: count, dtype: int64
+----------
+tissue_sampling_method distribution:
+tissue_sampling_method
+donor_lung                  702873
+lung_explant                428431
+surgical_resection          292307
+autopsy                     205374
+balf                        202476
+brush                       164056
+biopsy                      100467
+scraping                     82297
+balf_cryopreserved           51689
+donor_lung_cryopreserved     46500
+autopsy_cryopreserved         4366
+biopsy_cryopreserved          1611
+Name: count, dtype: int64
+----------
+tissue distribution:
+tissue
+lung                  1506615
+lung parenchyma        356202
+respiratory airway     304611
+nose                   115019
+Name: count, dtype: int64
+----------
+ann_level_1 distribution:
+ann_level_1
+Immune         1222972
+Epithelial      705307
+Stroma          181028
+Endothelial     156585
+Unknown          16555
+Name: count, dtype: int64
+----------
+
+====================================
+CPU Time used: 00:04:34
+CPU Percent: 70%
+Memory usage: 88996004kb
+Approx Power usage: 0.0008
+Walltime usage: 00:09:22
+
+====================================

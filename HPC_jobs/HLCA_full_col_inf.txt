@@ -1,0 +1,92 @@
+Disease distribution:
+disease
+normal                                   1305099
+COVID-19                                  341761
+pulmonary fibrosis                        268932
+interstitial lung disease                  68456
+chronic obstructive pulmonary disease      67943
+lung adenocarcinoma                        62807
+pneumonia                                  31923
+chronic rhinitis                           29137
+lung large cell carcinoma                  21167
+squamous cell lung carcinoma               20631
+cystic fibrosis                            17590
+lymphangioleiomyomatosis                   12374
+pleomorphic carcinoma                      10765
+hypersensitivity pneumonitis               10379
+non-specific interstitial pneumonia         8597
+pulmonary sarcoidosis                       4886
+Name: count, dtype: int64
+Tissue type distribution:
+tissue_type
+tissue    2282447
+Name: count, dtype: int64
+Cell type distribution:
+cell_type
+unknown                                                 623313
+alveolar macrophage                                     276291
+pulmonary alveolar type 2 cell                          156713
+respiratory basal cell                                  119037
+CD8-positive, alpha-beta T cell                         113641
+multiciliated columnar cell of tracheobronchial tree    113074
+elicited macrophage                                      88248
+CD4-positive, alpha-beta T cell                          82698
+nasal mucosa goblet cell                                 72359
+classical monocyte                                       64980
+capillary endothelial cell                               64583
+club cell                                                50366
+natural killer cell                                      48439
+alveolar type 1 fibroblast cell                          38328
+B cell                                                   37863
+plasma cell                                              33111
+pulmonary alveolar type 1 cell                           32306
+vein endothelial cell                                    31951
+CD1c-positive myeloid dendritic cell                     31359
+non-classical monocyte                                   26257
+alveolar adventitial fibroblast                          23259
+mast cell                                                21323
+tracheobronchial smooth muscle cell                      16676
+pulmonary artery endothelial cell                        14724
+endothelial cell of lymphatic vessel                     13067
+lung pericyte                                            11680
+epithelial cell of lower respiratory tract               11124
+bronchus fibroblast of lung                               8750
+lung macrophage                                           8317
+multiciliated epithelial cell                             7421
+respiratory tract hillock cell                            5570
+T cell                                                    3908
+plasmacytoid dendritic cell                               3686
+tracheobronchial serous cell                              2775
+serous secreting cell                                     2504
+dendritic cell                                            2360
+mesothelial cell                                          2261
+bronchial goblet cell                                     2257
+myofibroblast cell                                        1926
+pulmonary alveolar epithelial cell                        1815
+ionocyte                                                  1803
+acinar cell                                               1799
+smooth muscle cell                                        1788
+conventional dendritic cell                               1446
+mucus secreting cell                                      1425
+tracheobronchial goblet cell                              1190
+fibroblast                                                1093
+brush cell of tracheobronchial tree                        641
+stromal cell                                               553
+pulmonary neuroendocrine cell                              328
+hematopoietic stem cell                                     61
+Name: count, dtype: int64
+Subject type
+subject_type
+organ_donor      333516
+alive_healthy    190446
+alive_disease     60982
+Name: count, dtype: int64
+
+====================================
+CPU Time used: 00:04:29
+CPU Percent: 78%
+Memory usage: 89613436kb
+Approx Power usage: 0.0008
+Walltime usage: 00:08:03
+
+====================================

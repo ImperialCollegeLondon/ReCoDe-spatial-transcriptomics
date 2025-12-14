@@ -5,13 +5,14 @@ import warnings
 from logging import getLogger
 
 import scanpy as sc
+import seaborn as sns
 import squidpy as sq
 
 from recode_st.config import IOConfig, ViewImagesModuleConfig
-from recode_st.helper_function import seed_everything
-from recode_st.logging_config import configure_logging
+from recode_st.helper_function import configure_scanpy_figures
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 logger = getLogger(__name__)
 
@@ -23,6 +24,10 @@ def run_view_images(config: ViewImagesModuleConfig, io_config: IOConfig):
 
     # Create output directories if they do not exist
     module_dir.mkdir(exist_ok=True)
+
+    # Set figure settings to ensure consistency across all modules
+    configure_scanpy_figures(str(io_config.output_dir))
+    cmap = sns.color_palette("Spectral", as_cmap=True)
 
     # Import data
     logger.info("Loading Xenium data...")
@@ -60,23 +65,3 @@ def run_view_images(config: ViewImagesModuleConfig, io_config: IOConfig):
     adata.write_h5ad(module_dir / "adata.h5ad")
     logger.info(f"Data saved to {module_dir / 'adata.h5ad'}")
     logger.info("Imaging module completed successfully.")
-
-
-if __name__ == "__main__":
-    # Set up logger
-    configure_logging()
-    logger = getLogger("recode_st.4_view_images")
-
-    # Set seed
-    seed_everything(21122023)
-
-    try:
-        run_view_images(
-            ViewImagesModuleConfig(
-                module_name="4_view_images",
-                gene_list=("EPCAM", "CD3D", "CD68", "PTPRC", "ACTA2"),
-            ),
-            IOConfig(),
-        )
-    except FileNotFoundError as err:
-        logger.error(f"File not found: {err}")

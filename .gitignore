@@ -91,6 +91,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+*.ipynb
 
 # IPython
 profile_default/
@@ -130,6 +131,7 @@ ipython_config.py
 .pdm.toml
 .pdm-python
 .pdm-build/
+config_dev.toml
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
 __pypackages__/
@@ -149,6 +151,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+*_venv/
 
 # Spyder project settings
 .spyderproject
@@ -189,3 +192,14 @@ cython_debug/
 
 # Other
 .vscode/
+
+# DS_Store files
+.DS_Store
+*.DS_Store
+*/.DS_Store
+
+# HPC outputs
+*.sh.e*
+*.sh.o*
+*.e*
+*.o*

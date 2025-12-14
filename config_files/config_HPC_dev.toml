@@ -1,0 +1,57 @@
+# An example configuration file for recode_st
+
+log_level = "INFO" # Define the logging level here. Options are: DEBUG, INFO, WARNING, ERROR, CRITICAL
+seed = 19960915    # Random seed for reproducibility
+
+[io]
+base_dir = "/rds/general/user/sep22/projects/phenotypingsputumasthmaticsaurorawellcomea1/live/Sara_Patti/009_ST_Xenium"
+# Base directory for the project (relative to the current working directory)
+data_dir = "data"                                                                                                                                      # Directory where the input data is stored (relative to base_dir)
+xenium_dir = "xenium_raw"                                                                                                                              # Directory containing Xenium data (relative to data_dir)
+output_data_dir = "out_data"                                                                                                                           # Directory where processed data will be saved (relative to data_dir)
+adata_dir = "adata"                                                                                                                                    # Directory where AnnData objects will be saved (relative to output_data_dir)
+zarr_dir = "xenium.zarr"                                                                                                                               # Directory where Zarr data will be stored (relative to output_data_dir)
+output_dir = "out_run1_run2"                                                                                                                           # Directory where the output will be saved (relative to base_dir)
+path = "selected_cells_stats.csv"                                                                                                                      # Path to the CSV file containing selected cells statistics (relative to data_dir)
+logging_path = "logs"                                                                                                                                  # Directory where logs will be saved (relative to output_dir)
+ref_path = "/rds/general/user/sep22/home/Projects/_Public_datasets/HLCA/data/hlca_full_processed.h5ad"                                                 # Path to the reference scRNAseq data
+gene_id_dict_path = "/rds/general/user/sep22/projects/phenotypingsputumasthmaticsaurorawellcomea1/live/Sara_Patti/009_ST_Xenium/data/gene_id_dict.csv"
+
+[modules.quality_control]
+module_name = "1_quality_control" # Name of the module - will be used in the output directory name
+subsample_data = false            # Whether to subsample the data for development purposes
+min_counts = 10                   # Minimum number of counts required for a cell to pass filtering
+min_cells = 5                     # Minimum number of cells expressed required for a gene to pass filtering
+min_cell_area = 25                # Minimum cell area to filter cells required for a cell to pass filtering
+max_cell_area = 1000              # Maximum cell area to filter cells required for a cell to pass filtering
+norm_approach = "cell_area"       # Normalization approach to use; options: scanpy_log, sctransform, cell_area, none
+
+[modules.dimension_reduction]
+module_name = "2_dimension_reduction" # Name of the module - will be used in the output directory name
+norm_approach = "cell_area" # Normalization approach to use
+subsample_data = true # Whether to subsample the data for development purposes
+subsample_min_cells_per_roi = 100 # Minimum number of cells to include from each ROI in the subsampled dataset
+subsample_n_total = 5000 # Total number of cells to include in the subsampled dataset
+n_comps = 30 # number of principal components to compute
+n_neighbors = 30 # number of neighbors for the neighborhood graph
+resolution = 1 # resolution for leiden clustering
+obs_vis_list = ["ROI", "condition", "batch"]
+marker_genes = [
+    "PTPRC",
+    "CD3E",
+    "CD68",
+    "EPCAM",
+    "KRT5",
+    "PDGFRA",
+    "ACTA2",
+    "VWF",
+] # Cell type marker plots
+cluster_name = "leiden" # name of the cluster column in adata.obs
+
+[modules.integrate]
+module_name = "3_integrate"
+
+[modules.annotate]
+module_name = "4_annotate"             # Name of the module - will be used in the output directory name
+cluster_name = "predicted_cell_type"   # name of the cluster column in adata.obs
+new_clusters = "HLCA_full_num_cluster" # name of the new cluster column in adata.obs

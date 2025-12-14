@@ -1,6 +1,9 @@
 # Reproducible Spatial Transcriptomics Pipeline with RSE Best Practices
 
 <!-- A brief description of your exemplar, which may include an image -->
+**This repo is currently under development. Please check back soon for updates!**
+You can view the [Imperial College London ReCoDe spatial transcriptomics exemplar](https://imperialcollegelondon.github.io/ReCoDe-spatial-transcriptomics/).
+
 ## Introduction
 
 This exemplar details an analysis pipeline for spatial transcriptomics (10X Xenium platform).

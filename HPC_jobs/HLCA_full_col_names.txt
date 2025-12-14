@@ -1,0 +1,34 @@
+Index(['suspension_type', 'donor_id', 'is_primary_data',
+       'assay_ontology_term_id', 'cell_type_ontology_term_id',
+       'development_stage_ontology_term_id', 'disease_ontology_term_id',
+       'self_reported_ethnicity_ontology_term_id', 'tissue_ontology_term_id',
+       'sex_ontology_term_id', '3'_or_5'', 'BMI', 'age_or_mean_of_age_range',
+       'age_range', 'anatomical_region_ccf_score',
+       'ann_coarse_for_GWAS_and_modeling', 'ann_finest_level', 'ann_level_1',
+       'ann_level_2', 'ann_level_3', 'ann_level_4', 'ann_level_5',
+       'cause_of_death', 'core_or_extension', 'dataset', 'fresh_or_frozen',
+       'log10_total_counts', 'lung_condition', 'mixed_ancestry',
+       'original_ann_level_1', 'original_ann_level_2', 'original_ann_level_3',
+       'original_ann_level_4', 'original_ann_level_5',
+       'original_ann_nonharmonized', 'reannotation_type', 'sample',
+       'scanvi_label', 'sequencing_platform', 'smoking_status', 'study',
+       'subject_type', 'tissue_coarse_unharmonized',
+       'tissue_detailed_unharmonized', 'tissue_dissociation_protocol',
+       'tissue_level_2', 'tissue_level_3', 'tissue_sampling_method',
+       'total_counts', 'transf_ann_level_1_label', 'transf_ann_level_1_uncert',
+       'transf_ann_level_2_label', 'transf_ann_level_2_uncert',
+       'transf_ann_level_3_label', 'transf_ann_level_3_uncert',
+       'transf_ann_level_4_label', 'transf_ann_level_4_uncert',
+       'transf_ann_level_5_label', 'transf_ann_level_5_uncert', 'tissue_type',
+       'cell_type', 'assay', 'disease', 'sex', 'tissue',
+       'self_reported_ethnicity', 'development_stage', 'observation_joinid'],
+      dtype='object')
+
+====================================
+CPU Time used: 00:04:22
+CPU Percent: 86%
+Memory usage: 73536196kb
+Approx Power usage: 0.0008
+Walltime usage: 00:08:49
+
+====================================

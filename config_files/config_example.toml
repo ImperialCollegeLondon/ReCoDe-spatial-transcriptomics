@@ -1,0 +1,150 @@
+# Example configuration file for recode_st
+
+log_level = "INFO" # Logging detail level. Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+seed = 19960915    # Random seed for reproducibility
+
+# IO CONFIGURATION
+[io]
+
+base_dir = "/rds/general/user/sep22/projects/phenotypingsputumasthmaticsaurorawellcomea1/live/Sara_Patti/009_ST_Xenium"
+# Root directory of the project. All other paths are interpreted relative to this.
+
+data_dir = "data"
+# Folder (inside base_dir) containing input data.
+
+xenium_dir = "xenium_raw"
+# Subdirectory (inside data_dir) containing raw Xenium output files.
+
+output_data_dir = "out_data"
+# Folder (inside data_dir) where processed/intermediate data will be written.
+
+adata_dir = "adata"
+# Subdirectory (inside output_data_dir) for storing AnnData (.h5ad) objects.
+
+zarr_dir = "xenium.zarr"
+# Directory (inside output_data_dir) where Zarr-formatted Xenium data will be stored.
+
+output_dir = "out_run1_run2"
+# Folder (inside base_dir) where all pipeline output (plots, logs, results) is stored.
+
+area_path = "selected_cells_stats.csv"
+# Path (inside data_dir) to the CSV file that contains per-cell area statistics.
+
+logging_dir = "logs"
+# Subdirectory (inside output_dir) where log files will be saved.
+
+ref_path = "/rds/general/user/sep22/home/Projects/_Public_datasets/HLCA/data/hlca_full_processed.h5ad"
+# Full path to the HLCA reference dataset used for annotation.
+
+gene_id_dict_path = "/rds/general/user/sep22/projects/phenotypingsputumasthmaticsaurorawellcomea1/live/Sara_Patti/009_ST_Xenium/data/gene_id_dict.csv"
+# Full path to a CSV mapping Ensembl IDs to gene symbols. Must contain:
+#   - index column: ensembl_id
+#   - column: gene_symbol
+
+
+# QUALITY CONTROL MODULE
+[modules.quality_control]
+
+module_name = "1_quality_control"
+# Name used to label this step’s output directory.
+
+subsample_data = false
+# If true, only a subset of cells is loaded (useful for fast dev runs).
+
+min_counts = 10
+# Minimum total transcript counts a cell must have to be kept.
+
+min_cells = 5
+# Minimum number of cells in which a gene must be detected to be retained.
+
+min_cell_area = 25
+# Minimum allowed cell area. Cells smaller than this are filtered out.
+
+max_cell_area = 1000
+# Maximum allowed cell area. Cells larger than this are filtered out.
+
+norm_approach = "cell_area"
+# Normalization method. Options:
+#   - scanpy_log: basic library-size + log normalization
+#   - sctransform: variance-stabilizing normalization
+#   - cell_area: normalize by physical cell area (Xenium-specific)
+#   - none: skip normalization
+
+
+[modules.dimension_reduction]
+
+module_name = "2_dimension_reduction"
+# Label for this step’s output directory.
+
+norm_approach = "cell_area"
+# Normalization strategy for PCA/neighbor graph.
+
+subsample_strategy = "compute"
+# Options:
+#   - none: no subsampling
+#   - compute: generate a subsampled dataset dynamically
+#   - load: load an existing subsampled dataset
+
+subsample_min_cells_per_roi = 100
+# Minimum number of cells drawn from each ROI when subsampling.
+
+subsample_n_total = 5000
+# Total number of cells targeted for subsampling.
+
+n_pca = 30
+# Number of principal components to compute (previously "n_comps").
+
+n_neighbors = 30
+# Number of nearest neighbors used when building the KNN graph.
+
+resolution = 1
+# Resolution parameter for Leiden clustering: higher → more clusters.
+
+cluster_name = "leiden"
+# Name of the column in adata.obs that will store clustering labels.
+
+
+[modules.integrate]
+
+module_name = "3_integrate"
+# Label for this step’s output directory.
+# Currently no additional parameters.
+
+
+[modules.annotate]
+
+module_name = "4_annotate"
+# Label for this step’s output directory.
+
+cluster_name = "predicted_cell_type"
+# Column in adata.obs that contains cluster assignments before annotation.
+
+new_clusters = "HLCA_full_num_cluster"
+# Column name to store the new annotated cell types.
+
+[modules.view_images]
+module_name = "4_view_images" # Name of the module - will be used in the output directory name
+gene_list = [ # List of genes to visualize on tissue
+    "EPCAM",
+    "CD3D",
+    "CD68",
+    "PTPRC",
+    "ACTA2",
+]
+
+[modules.spatial_statistics]
+module_name = "5_spatial_stats" # Name of the module - will be used in the output directory name
+
+[modules.muspan]
+module_name = "6_muspan" # Name of the module - will be used in the output directory name
+domain_name = "Xenium_lung_FFPE" # Name of the domain for MuSpAn analysis
+transcripts_of_interest = [ # List of transcripts of interest for MuSpAn analysis
+    "EPCAM",
+    "CD3D",
+    "CD68",
+    "VWF",
+    "PTPRC",
+    "ACTA2",
+]
+adata_cell_id = "cell_id" # column name in adata.obs for cell IDs
+cluster_labels = "cell_type" # column name in adata.obs for cell types

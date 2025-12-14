@@ -4,13 +4,14 @@ import warnings
 from logging import getLogger
 
 import scanpy as sc
+import seaborn as sns
 import squidpy as sq
 
 from recode_st.config import IOConfig, SpatialStatisticsModuleConfig
-from recode_st.helper_function import seed_everything
-from recode_st.logging_config import configure_logging
+from recode_st.helper_function import configure_scanpy_figures
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 logger = getLogger(__name__)
 
@@ -22,6 +23,10 @@ def run_spatial_statistics(config: SpatialStatisticsModuleConfig, io_config: IOC
 
     # Create output directories if they do not exist
     module_dir.mkdir(exist_ok=True)
+
+    # Set figure settings to ensure consistency across all modules
+    configure_scanpy_figures(str(io_config.output_dir))
+    cmap = sns.color_palette("Spectral", as_cmap=True)
 
     # Import data
     logger.info("Loading Xenium data...")
@@ -104,19 +109,3 @@ def run_spatial_statistics(config: SpatialStatisticsModuleConfig, io_config: IOC
     adata.write_h5ad(module_dir / "adata.h5ad")
     logger.info(f"Data saved to {module_dir / 'adata.h5ad'}")
     logger.info("Spatial statistics module completed successfully.")
-
-
-if __name__ == "__main__":
-    # Set up logger
-    configure_logging()
-    logger = getLogger("recode_st.5_spatial_statistics")
-
-    # Set seed
-    seed_everything(21122023)
-
-    try:
-        run_spatial_statistics(
-            SpatialStatisticsModuleConfig(module_name="5_spatial_stats"), IOConfig()
-        )
-    except FileNotFoundError as err:
-        logger.error(f"File not found: {err}")
