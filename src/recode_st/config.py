@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Literal, Self
 
 import tomllib
-from pydantic import BaseModel, DirectoryPath, model_validator
+from pydantic import BaseModel, DirectoryPath, Field, model_validator
 
 
 class BaseModuleConfig(BaseModel):
@@ -14,8 +14,21 @@ class BaseModuleConfig(BaseModel):
     """The name of the module."""
 
 
+class SubsampleModuleConfig(BaseModuleConfig):
+    """Configuration for the Subsample module."""
+
+    n_cells: int
+    """Total number of cells to include in the subsampled dataset."""
+
+    replace: bool = False
+    """Whether to sample with replacement."""
+
+
 class QualityControlModuleConfig(BaseModuleConfig):
     """Configuration for the Quality Control module."""
+
+    subsample_data: bool = False
+    """Whether to subsample the data for development purposes."""
 
     min_counts: int
     """Minimum number of counts required for a cell to pass filtering."""
@@ -23,27 +36,81 @@ class QualityControlModuleConfig(BaseModuleConfig):
     min_cells: int
     """Minimum number of cells expressed required for a gene to pass filtering"""
 
+    min_cell_area: int
+    """Minimum area to filter cells."""
+
+    max_cell_area: int
+    """Minimum area to filter cells."""
+
+    remove_cells: list[str] = Field(default_factory=list)
+    """List of cell types to remove from the dataset. Defaults to empty list."""
+
+    norm_approach: Literal["scanpy_log", "sctransform", "cell_area", "none"] = (
+        "cell_area"
+    )
+    """Normalization approach to use: 'scanpy_log' for Scanpy log normalization,
+    'sctransform' for SCTransform normalization, or
+    'cell_area' for normalization by cell area."""
+
+
+class DoubletIdentificationModuleConfig(BaseModuleConfig):
+    """Configuration for the Doublet Identification module."""
+
 
 class DimensionReductionModuleConfig(BaseModuleConfig):
     """Configuration for the Quality Control module."""
 
-    n_comps: int
+    subsample_strategy: Literal["none", "compute", "load"] = "none"
+    """Subsampling strategy for development dataset."""
+    subsample_n_total: int = 5000
+    """Total number of cells to include in the subsampled dataset."""
+    subsample_min_cells_per_roi: int = 100
+    """Minimum number of cells to include from each ROI in the subsampled dataset."""
+    n_pca: int
     """number of principal components to compute"""
     n_neighbors: int
     """ number of neighbors for the neighborhood graph"""
     resolution: float
     """resolution for leiden clustering"""
-    cluster_name: str
-    """Name of the cluster column in adata.obs."""
+    norm_approach: Literal["scanpy_log", "sctransform", "cell_area", "none"] = (
+        "cell_area"
+    )
+    """Normalization approach to use."""
+    obs_vis_list: list[str]
+    """List of observation fields to visualize on UMAP."""
+    marker_genes: list[str]
+    """List of marker genes to visualize on UMAP."""
+
+
+class IntegrateIngestModuleConfig(BaseModuleConfig):
+    """Configuration for the Integration Ingest module."""
+
+
+class IntegrateSCVIModuleConfig(BaseModuleConfig):
+    """Configuration for the Integration scVI module."""
 
 
 class AnnotateModuleConfig(BaseModuleConfig):
     """Configuration for the Annotate module."""
 
     cluster_name: str
-    """Name of the cluster column in adata.obs."""
-    new_clusters: str
+    """Name of the cluster column in adata.obs to use for annotation."""
+
+    clusters_label: str
     """Name of the new cluster column in adata.obs."""
+
+    cluster_to_cell_type: dict[str, str]
+    """Mapping from cluster labels to cell type annotations."""
+
+
+class PsuedobulkModuleConfig(BaseModuleConfig):
+    """Configuration for the Psuedobulk module."""
+
+    annotation_var: str
+    """Name of the annotation in adata.obs to use for pseudobulk aggregation."""
+
+    subset_key: str
+    """Key in adata.obs to subset the data for pseudobulk analysis."""
 
 
 class ViewImagesModuleConfig(BaseModuleConfig):
@@ -55,6 +122,16 @@ class ViewImagesModuleConfig(BaseModuleConfig):
 
 class SpatialStatisticsModuleConfig(BaseModuleConfig):
     """Configuration for the Spatial Statistics module."""
+
+    clusters_label: str
+    """Name of the new cluster column in adata.obs."""
+
+
+class Drug2CellModuleConfig(BaseModuleConfig):
+    """Configuration for Drug2Cell."""
+
+    drug_list: list[str]
+    """List of drugs to visualize on UMAP and spatially in tissue"""
 
 
 class MuspanModuleConfig(BaseModuleConfig):
@@ -118,11 +195,23 @@ class ModulesConfig(BaseModel):
     format_data: FormatDataModuleConfig | None = None
     """Configuration for the Format Data module."""
 
+    subsample_data: SubsampleModuleConfig | None = None
+    """Configuration for the Subsample module."""
+
     quality_control: QualityControlModuleConfig | None = None
     """Configuration for the Quality Control module."""
 
+    doublet_identification: DoubletIdentificationModuleConfig | None = None
+    """Configuration for doublet detection with ovrlypy module."""
+
     dimension_reduction: DimensionReductionModuleConfig | None = None
     """Configuration for the Dimension Reduction module."""
+
+    integrate_ingest: IntegrateIngestModuleConfig | None = None
+    """Configuration for the Integration (ingest) module."""
+
+    integrate_scvi: IntegrateSCVIModuleConfig | None = None
+    """Configuration for the Integration (scVI) module."""
 
     annotate: AnnotateModuleConfig | None = None
     """Configuration for the Annotate module."""
@@ -132,6 +221,9 @@ class ModulesConfig(BaseModel):
 
     spatial_statistics: SpatialStatisticsModuleConfig | None = None
     """Configuration for the Spatial Statistics module."""
+
+    drug2cell: Drug2CellModuleConfig | None = None
+    """Configuration for Drug2Cell module."""
 
     muspan: MuspanModuleConfig | None = None
     """Configuration for the Muspan module."""
@@ -152,29 +244,47 @@ class IOConfig(BaseModel):
     data_dir: Path = Path("data")
     """The data directory for all the input files."""
 
-    output_dir: Path = Path("analysis")
+    output_dir: Path = Path("out")
     """The output directory for all the output files."""
 
     xenium_dir: Path = Path("xenium")
     """The directory containing the Xenium input data."""
 
+    output_data_dir: Path = Path("data")
+    """The subdirectory under output_dir for processed data."""
+
     zarr_dir: Path = Path("xenium.zarr")
-    """The directory containing the Zarr-formatted input data."""
+    """The directory containing the Zarr-formatted input data from each xenium ROI."""
+
+    adata_dir: Path = Path("adata")
+    """The directory containing the adata from each xenium ROI."""
 
     area_path: Path = Path("selected_cells_stats.csv")
     """The path to the CSV file containing selected cells statistics."""
+
+    ref_path: Path  # no default, must be explicitly set in config
+    """Path to the reference dataset in h5ad format."""
+
+    gene_id_dict_path: Path  # no default, must be explicitly set in config
+    """Path to the gene ID dictionary CSV file.
+    The CSV should have 'ensembl_id' as the index column and a 'gene_symbol' column."""
 
     logging_dir: Path = Path("logs")
     """The directory for logging output."""
 
     @model_validator(mode="after")
     def resolve_paths(self) -> Self:
-        """Resolve the relative paths so they are relative to the base directory."""
+        """Resolve relative paths so they are absolute relative to base_dir."""
+        # Input paths
         self.data_dir = self.base_dir / self.data_dir
-        self.output_dir = self.base_dir / self.output_dir
         self.xenium_dir = self.data_dir / self.xenium_dir
-        self.zarr_dir = self.data_dir / self.zarr_dir
         self.area_path = self.data_dir / self.area_path
+
+        # Output paths
+        self.output_dir = self.base_dir / self.output_dir
+        self.output_data_dir = self.data_dir / self.output_data_dir
+        self.zarr_dir = self.output_data_dir / self.zarr_dir
+        self.adata_dir = self.output_data_dir / self.adata_dir
         self.logging_dir = self.output_dir / self.logging_dir
 
         # Ensure directories exists
@@ -197,10 +307,10 @@ class Config(BaseModel):
     seed: int
     """A random seed to use for reproducibility."""
 
-    io: IOConfig = IOConfig()
+    io: IOConfig = Field(default_factory=IOConfig)
     """Input and output directories configuration."""
 
-    modules: ModulesConfig = ModulesConfig()
+    modules: ModulesConfig = Field(default_factory=ModulesConfig)
     """Configuration for all modules."""
 
 

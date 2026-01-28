@@ -33,7 +33,7 @@ Anaconda is a popular distribution of Python and R for scientific computing and 
 
 In addition to the package manager, Anaconda also includes a collection of pre-installed packages commonly used in data science, such as NumPy, pandas, and Matplotlib. This makes it easier to get started with data analysis and scientific computing without having to install each package individually. A user can download either `Anaconda` or `Miniconda`, which is a smaller version of Anaconda that includes only the conda package manager and Python.
 
-![Anaconda, miniconda, and conda diagram](assets/conda.png)
+![Anaconda, miniconda, and conda diagram](assets/conda.pdf)
 
 #### Creating a virtual environment with conda
 

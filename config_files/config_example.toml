@@ -1,0 +1,114 @@
+# Example configuration file for recode_st
+
+log_level = "INFO" # Logging detail level. Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+seed = 19960915    # Random seed for reproducibility
+
+# IO CONFIGURATION
+[io]
+
+base_dir = "/rds/general/user/sep22/projects/phenotypingsputumasthmaticsaurorawellcomea1/live/Sara_Patti/009_ST_Xenium"
+# Root directory of the project. All other paths are interpreted relative to this.
+
+data_dir = "data"
+# Folder (inside base_dir) containing input data.
+
+xenium_dir = "xenium_raw"
+# Subdirectory (inside data_dir) containing raw Xenium output files.
+
+output_data_dir = "out_data"
+# Folder (inside data_dir) where processed/intermediate data will be written.
+
+adata_dir = "adata"
+# Subdirectory (inside output_data_dir) for storing AnnData (.h5ad) objects.
+
+zarr_dir = "xenium.zarr"
+# Directory (inside output_data_dir) where Zarr-formatted Xenium data will be stored.
+
+output_dir = "out_run1_run2"
+# Folder (inside base_dir) where all pipeline output (plots, logs, results) is stored.
+
+area_path = "selected_cells_stats.csv"
+# Path (inside data_dir) to the CSV file that contains per-cell area statistics.
+
+logging_dir = "logs"
+# Subdirectory (inside output_dir) where log files will be saved.
+
+ref_path = "/rds/general/user/sep22/home/Projects/_Public_datasets/HLCA/data/hlca_full_processed.h5ad"
+# Full path to the HLCA reference dataset used for annotation.
+
+gene_id_dict_path = "/rds/general/user/sep22/projects/phenotypingsputumasthmaticsaurorawellcomea1/live/Sara_Patti/009_ST_Xenium/data/gene_id_dict.csv"
+# Full path to a CSV mapping Ensembl IDs to gene symbols. Must contain:
+#   - index column: ensembl_id
+#   - column: gene_symbol
+
+
+# QUALITY CONTROL MODULE
+[modules.quality_control]
+module_name = "quality_control" # Name of the module - output directory name
+subsample_data = false          # Whether to subsample the data for dev
+min_counts = 10                 # Minimum number of counts required
+min_cells = 5                   # Minimum number of cells expressed
+min_cell_area = 25              # Minimum cell area to filter cells
+max_cell_area = 1000            # Maximum cell area to filter cells
+norm_approach = "cell_area"     # Normalization approach to use
+remove_cells = []               # List of cell IDs to remove from the dataset
+
+#DOUBLET IDENTIFICATION MODULE
+[modules.doublet_identification]
+module_name = "doublet_identification" # Name of the module - will be used in the output directory name
+
+# DIMENSION REDUCTION MODULE
+[modules.dimension_reduction]
+module_name = "dimension_reduction" # Name of the module - will be used in the output directory name
+norm_approach = "cell_area" # Normalization approach to use
+n_pca = 30 # number of principal components to use for neighborhood graph
+n_neighbors = 40 # number of neighbors for the neighborhood graph
+resolution = 1 # resolution for leiden clustering
+cluster_name = "leiden" # name of the cluster column in adata.obs
+obs_vis_list = ["ROI", "condition", "batch"]
+marker_genes = [
+    "PTPRC",
+    "CD3E",
+    "CD68",
+    "EPCAM",
+    "KRT5",
+    "PDGFRA",
+    "ACTA2",
+    "VWF",
+] # Cell type marker plots
+
+# INTEGRATION MODULES
+[modules.integrate]
+module_name = "integrate"
+
+# ANNOTATION MODULE
+[modules.annotate]
+module_name = "annotate"
+cluster_name = "leiden"
+clusters_label = "manual_annotation"
+
+[modules.annotate.cluster_to_cell_type]
+"0" = "Epithelial cells"
+"1" = "Fibroblasts"
+"2" = "Endothelial cells"
+"3" = "Immune cells"
+"4" = "Smooth muscle cells"
+"5" = "Unknown"
+
+
+[modules.spatial_statistics]
+module_name = "5_spatial_stats" # Name of the module - will be used in the output directory name
+
+[modules.muspan]
+module_name = "6_muspan" # Name of the module - will be used in the output directory name
+domain_name = "Xenium_lung_FFPE" # Name of the domain for MuSpAn analysis
+transcripts_of_interest = [ # List of transcripts of interest for MuSpAn analysis
+    "EPCAM",
+    "CD3D",
+    "CD68",
+    "VWF",
+    "PTPRC",
+    "ACTA2",
+]
+adata_cell_id = "cell_id" # column name in adata.obs for cell IDs
+cluster_labels = "cell_type" # column name in adata.obs for cell types

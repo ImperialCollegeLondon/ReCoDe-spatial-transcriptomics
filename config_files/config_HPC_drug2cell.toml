@@ -1,0 +1,23 @@
+# An example configuration file for recode_st
+
+log_level = "INFO" # Define the logging level here. Options are: DEBUG, INFO, WARNING, ERROR, CRITICAL
+seed = 19960915    # Random seed for reproducibility
+
+[io]
+base_dir = "/rds/general/user/sep22/projects/phenotypingsputumasthmaticsaurorawellcomea1/live/Sara_Patti/009_ST_Xenium"
+# Base directory for the project (relative to the current working directory)
+data_dir = "data"                                                                                                                                      # Directory where the input data is stored (relative to base_dir)
+xenium_dir = "xenium_raw"                                                                                                                              # Directory containing Xenium data (relative to data_dir)
+output_data_dir = "out_data"                                                                                                                           # Directory where processed data will be saved (relative to data_dir)
+adata_dir = "adata"                                                                                                                                    # Directory where AnnData objects will be saved (relative to output_data_dir)
+zarr_dir = "xenium.zarr"                                                                                                                               # Directory where Zarr data will be stored (relative to output_data_dir)
+output_dir = "out_1_2_3"                                                                                                                               # Directory where the output will be saved (relative to base_dir)
+path = "selected_cells_stats.csv"                                                                                                                      # Path to the CSV file containing selected cells statistics (relative to data_dir)
+logging_path = "logs"                                                                                                                                  # Directory where logs will be saved (relative to output_dir)
+ref_path = "/rds/general/user/sep22/home/Projects/_Public_datasets/HLCA/data/processed_hlca_full_ref.h5ad"                                             # Path to the reference scRNAseq data
+gene_id_dict_path = "/rds/general/user/sep22/projects/phenotypingsputumasthmaticsaurorawellcomea1/live/Sara_Patti/009_ST_Xenium/data/gene_id_dict.csv"
+
+
+[modules.drug2cell]
+module_name = "drug2cell"
+drug_list = ["CHEMBL1256391|PIRFENIDONE", "CHEMBL3039504|NINTEDANIB ESYLATE"]

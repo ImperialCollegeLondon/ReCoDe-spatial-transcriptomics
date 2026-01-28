@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from recode_st.config import IOConfig, MuspanSpatialGraphModuleConfig
-from recode_st.helper_function import seed_everything
-from recode_st.logging_config import configure_logging
+from recode_st.helper_function import configure_scanpy_figures
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 logger = getLogger(__name__)
 
@@ -40,10 +40,13 @@ def run_muspan_graph(config: MuspanSpatialGraphModuleConfig, io_config: IOConfig
     min_edge_distance_shape = config.min_edge_distance_shape
     max_edge_distance_shape = config.max_edge_distance_shape
     k_list = config.k_list
-    color_map = sns.color_palette("Blues", as_cmap=True)
 
     # Create output directories if they do not exist
     module_dir.mkdir(exist_ok=True)
+
+    # Set figure settings to ensure consistency across all modules
+    configure_scanpy_figures(str(io_config.output_dir))
+    cmap = sns.color_palette("Spectral", as_cmap=True)
 
     # Import data
     logger.info("Loading MuSpAn object...")
@@ -60,7 +63,7 @@ def run_muspan_graph(config: MuspanSpatialGraphModuleConfig, io_config: IOConfig
     logger.info("Creating Proximity based networks (point-like objects)...")
     create_proximity_point_networks(domain, distance_list)
     logger.info("Plotting Proximity networks (point-like objects)...")
-    plot_proximity_networks(domain, module_dir, color_map, distance_list)
+    plot_proximity_networks(domain, module_dir, cmap, distance_list)
 
     # Create proximity triangulation spatial graph with shape-like objects
     logger.info("Creating Proximity based networks (shape-like objects)...")
@@ -72,7 +75,7 @@ def run_muspan_graph(config: MuspanSpatialGraphModuleConfig, io_config: IOConfig
     logger.info("Creating KNN based networks ...")
     create_knn_networks(domain, k_list)
     logger.info("Plotting KNN based networks...")
-    plot_knn_networks(domain, module_dir, color_map, k_list)
+    plot_knn_networks(domain, module_dir, cmap, k_list)
 
     # Confirm the domain has the expected labels
     logger.info(f"Networks in domain: {domain.networks.keys()}")
@@ -133,7 +136,7 @@ def plot_delaunay_networks(domain, module_dir):
     )
 
     plt.tight_layout()
-    plt.savefig(module_dir / "muspan_delaunay.png")
+    plt.savefig(module_dir / "muspan_delaunay.pdf")
     logger.info("Delaunay networks plotted and saved")
 
 
@@ -251,7 +254,7 @@ def plot_proximity_shape(domain, module_dir):
 
     This function visualizes the cell boundaries and the contact
     network (proximity network) for the provided spatial domain object.
-    The resulting plot is saved as a PNG file in the specified module directory.
+    The resulting plot is saved as a pdf file in the specified module directory.
 
     Args:
         domain: (muspan object)
@@ -259,7 +262,7 @@ def plot_proximity_shape(domain, module_dir):
         module_dir (Path or str): Directory path where the output image will be saved.
 
     Side Effects:
-        - Saves PNG image named 'muspan_proximity_shape.png' in the specified directory.
+        - Saves pdf image named 'muspan_proximity_shape.pdf' in the specified directory.
         - Logs an info message upon successful plot creation.
     """
     fig, ax = plt.subplots(1, 1, figsize=(6, 6))
@@ -286,29 +289,29 @@ def plot_proximity_shape(domain, module_dir):
     )
 
     plt.tight_layout()
-    plt.savefig(module_dir / "muspan_proximity_shape.png")
+    plt.savefig(module_dir / "muspan_proximity_shape.pdf")
     logger.info("Proximity networks (shape-like objects) plotted and saved")
 
 
-def plot_knn_networks(domain, module_dir, color_map, k_list):
+def plot_knn_networks(domain, module_dir, cmap, k_list):
     """Plots and saves k-nearest neighbor (k-NN) networks for a given spatial domain.
 
     For each value of k in `k_list`, this function visualizes the corresponding
     k-NN network using the provided color map for edge weights and saves the
-    resulting figure as 'muspan_knn.png' in the specified module directory.
+    resulting figure as 'muspan_knn.pdf' in the specified module directory.
 
     Args:
         domain: (muspan object)
             The spatial domain object containing network and cell centroid information.
         module_dir (Path or str): Directory path where the output image will be saved.
-        color_map: Colormap to use for visualizing edge weights in the network.
+        cmap: Colormap to use for visualizing edge weights in the network.
         k_list (list of int): List of k values for which to plot k-NN networks.
 
     Returns:
         None
 
     Side Effects:
-        - Saves the generated plot as 'muspan_knn.png' in `module_dir`.
+        - Saves the generated plot as 'muspan_knn.pdf' in `module_dir`.
         - Logs an info message upon successful plot saving.
     """
     fig, axes = plt.subplots(1, len(k_list), figsize=(6 * len(k_list), 6))
@@ -323,7 +326,7 @@ def plot_knn_networks(domain, module_dir, color_map, k_list):
             network_name=f"{k}-NN network",
             ax=axes[i],
             edge_weight_name="Distance",
-            edge_cmap=color_map,
+            edge_cmap=cmap,
             visualise_kwargs=dict(
                 objects_to_plot=("collection", "Cell centroids"),
                 marker_size=1,
@@ -332,7 +335,7 @@ def plot_knn_networks(domain, module_dir, color_map, k_list):
         )
 
     plt.tight_layout()
-    plt.savefig(module_dir / "muspan_knn.png")
+    plt.savefig(module_dir / "muspan_knn.pdf")
     logger.info("KNN networks plotted and saved")
 
 
@@ -362,7 +365,7 @@ def create_knn_networks(domain, k_list):
         )
 
 
-def plot_proximity_networks(domain, module_dir, color_map, distance_list):
+def plot_proximity_networks(domain, module_dir, cmap, distance_list):
     """Plot proximity networks for point-like objects at specified distances.
 
     This function generates and saves visualizations of proximity networks the domain,
@@ -374,12 +377,12 @@ def plot_proximity_networks(domain, module_dir, color_map, distance_list):
         domain: (muspan object)
             The spatial domain containing point-like objects to be analyzed.
         module_dir (Path or str): Directory path where the output plot image is saved.
-        color_map: Colormap used for visualizing edge distances in the network.
+        cmap: Colormap used for visualizing edge distances in the network.
         distance_list (list of float): List of maximum distances to
         define proximity networks.
 
     Returns:
-        None. The function saves the generated plot as 'muspan_proximity_point.png'
+        None. The function saves the generated plot as 'muspan_proximity_point.pdf'
         in the specified directory and logs the completion of the plotting process.
     """
     fig, axes = plt.subplots(1, len(distance_list), figsize=(20, 6))
@@ -393,7 +396,7 @@ def plot_proximity_networks(domain, module_dir, color_map, distance_list):
             domain,
             network_name=f"prox network centroids {distance}",
             ax=axes[i],
-            edge_cmap=color_map,
+            edge_cmap=cmap,
             edge_vmin=0,
             edge_vmax=distance,
             add_cbar=False,
@@ -404,33 +407,5 @@ def plot_proximity_networks(domain, module_dir, color_map, distance_list):
             ),
         )
     plt.tight_layout()
-    plt.savefig(module_dir / "muspan_proximity_point.png")
+    plt.savefig(module_dir / "muspan_proximity_point.pdf")
     logger.info("Proximity networks (point-like objects) plotted and saved")
-
-
-if __name__ == "__main__":
-    # Set up logger
-    configure_logging()
-    logger = getLogger("recode_st.ms_spatial_graph")
-
-    # Set seed
-    seed_everything(21122023)
-
-    try:
-        run_muspan_graph(
-            MuspanSpatialGraphModuleConfig(
-                module_name="6_muspan",
-                muspan_object="muspan_object.muspan",
-                min_edge_distance=0,
-                max_edge_distance=45,
-                distance_list=(10, 20, 50),
-                min_edge_distance_shape=0,
-                max_edge_distance_shape=1,
-                k_list=(2, 5, 10, 15),
-            ),
-            IOConfig(),
-        )
-    except FileNotFoundError as err:
-        logger.error(f"File not found: {err}")
-    except ModuleNotFoundError as err:
-        logger.error(f"Module not found: {err}")
