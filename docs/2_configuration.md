@@ -154,22 +154,22 @@ To add new configurable parameters to an existing module:
 
       ```python
       class QualityControlModuleConfig(BaseModuleConfig):
-         """Configuration for the Quality Control module."""
+          """Configuration for the Quality Control module."""
 
-         min_counts: int
-         min_cells: int
-         # Add your new parameter here
-         new_parameter: float
-         """Description of what this parameter does."""
+          min_counts: int
+          min_cells: int
+          # Add your new parameter here
+          new_parameter: float
+          """Description of what this parameter does."""
       ```
 
 1. **Update the module function** to use the new parameter:
 
       ```python
       def run_qc(config: QualityControlModuleConfig, io_config: IOConfig):
-         # Use the new parameter
-         threshold = config.new_parameter
-         # ... rest of function
+          # Use the new parameter
+          threshold = config.new_parameter
+          # ... rest of function
       ```
 
 1. **Add the parameter to config files** like `config.toml`:
@@ -190,23 +190,23 @@ To add a completely new analysis module:
 
       ```python
       class MyNewModuleConfig(BaseModuleConfig):
-         """Configuration for My New Module."""
+          """Configuration for My New Module."""
 
-         my_parameter: int
-         """Description of this parameter."""
+          my_parameter: int
+          """Description of this parameter."""
 
-         another_parameter: tuple[str, ...]
-         """List of items for analysis."""
+          another_parameter: tuple[str, ...]
+          """List of items for analysis."""
       ```
 
 1. **Add it to ModulesConfig** in the same file:
 
       ```python
       class ModulesConfig(BaseModel):
-         # ...existing modules...
+          # ...existing modules...
 
-         my_new_module: MyNewModuleConfig | None = None
-         """Configuration for My New Module."""
+          my_new_module: MyNewModuleConfig | None = None
+          """Configuration for My New Module."""
       ```
 
 1. **Create the module file** `src/recode_st/my_new_module.py`:
@@ -219,30 +219,32 @@ To add a completely new analysis module:
 
       logger = getLogger(__name__)
 
+
       def run_my_new_module(config: MyNewModuleConfig, io_config: IOConfig):
-         """Run my new analysis."""
-         # Use config parameters
-         param_value = config.my_parameter
-         items = config.another_parameter
+          """Run my new analysis."""
+          # Use config parameters
+          param_value = config.my_parameter
+          items = config.another_parameter
 
-         # Create output directory
-         module_dir = io_config.output_dir / config.module_name
-         module_dir.mkdir(exist_ok=True)
+          # Create output directory
+          module_dir = io_config.output_dir / config.module_name
+          module_dir.mkdir(exist_ok=True)
 
-         # Your analysis code here...
-         logger.info(f"Running analysis with parameter: {param_value}")
+          # Your analysis code here...
+          logger.info(f"Running analysis with parameter: {param_value}")
       ```
 
 1. **Add the conditional import** in `src/recode_st/__main__.py`:
 
       ```python
       def main(config: Config):
-         # ...existing code...
+          # ...existing code...
 
-         if config.modules.my_new_module:
-            from recode_st.my_new_module import run_my_new_module
-            logger.info("Running My New Module")
-            run_my_new_module(config.modules.my_new_module, config.io)
+          if config.modules.my_new_module:
+              from recode_st.my_new_module import run_my_new_module
+
+              logger.info("Running My New Module")
+              run_my_new_module(config.modules.my_new_module, config.io)
       ```
 
 1. **Add to configuration files**:
