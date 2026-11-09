@@ -8,7 +8,6 @@ import numpy as np
 import scanpy as sc
 import seaborn as sns
 import spatialdata as sd
-from zarr.errors import PathNotFoundError
 
 from recode_st.config import IOConfig, QualityControlModuleConfig
 from recode_st.helper_function import seed_everything
@@ -33,7 +32,7 @@ def run_qc(config: QualityControlModuleConfig, io_config: IOConfig):
         # Read in .zarr
         logger.info("Loading Xenium data...")
         sdata = sd.read_zarr(io_config.zarr_dir)  # read directly from the zarr store
-    except PathNotFoundError as err:
+    except FileNotFoundError as err:
         logger.error(
             f"File not found (or not a valid Zarr store): {io_config.zarr_dir}"
         )

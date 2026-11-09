@@ -4,143 +4,169 @@
 #
 #    pip-compile --extra=dev
 #
-aiobotocore==2.23.0
+aiobotocore==3.10.0
     # via s3fs
-aiohappyeyeballs==2.6.1
+aiohappyeyeballs==2.7.1
     # via aiohttp
-aiohttp==3.12.13
+aiohttp==3.14.5
     # via
     #   aiobotocore
+    #   fsspec
     #   ome-zarr
     #   s3fs
     #   squidpy
-aioitertools==0.12.0
+aioitertools==0.13.0
     # via aiobotocore
-aiosignal==1.3.2
+aiosignal==1.4.0
     # via aiohttp
-anndata==0.11.4
+anndata==0.13.4
     # via
+    #   annsel
     #   readfcs
     #   scanpy
+    #   scverse-misc
     #   spatialdata
     #   spatialdata-io
     #   squidpy
-annotated-types==0.7.0
+annotated-types==0.8.0
     # via pydantic
-appnope==0.1.4
+annsel==0.1.3
+    # via spatialdata
+appnope==1.0.0
     # via ipykernel
-array-api-compat==1.12.0
-    # via anndata
-asciitree==0.3.3
-    # via zarr
-asttokens==3.0.0
+array-api-compat==1.16.0
+    # via
+    #   anndata
+    #   fast-array-utils
+    #   transformnd
+asttokens==3.0.2
     # via stack-data
-attrs==25.3.0
+attrs==26.1.0
     # via
     #   aiohttp
     #   jsonschema
     #   omnipath
     #   referencing
-babel==2.17.0
+babel==2.18.0
     # via mkdocs-material
-backrefs==5.8
+backrefs==5.9
     # via mkdocs-material
-beautifulsoup4==4.13.4
+beautifulsoup4==4.15.0
     # via nbconvert
-bleach[css]==6.2.0
+bleach[css]==6.4.0
     # via nbconvert
-botocore==1.38.27
+botocore==1.43.117
     # via aiobotocore
-bracex==2.5.post1
+bracex==3.2.2
     # via wcmatch
-build==1.2.2.post1
+build==1.6.1
     # via pip-tools
-certifi==2025.6.15
+centrosome==1.3.4
+    # via
+    #   cp-measure
+    #   squidpy
+certifi==2026.10.23
     # via
     #   pyogrio
     #   pyproj
     #   requests
-cfgv==3.4.0
+    #   scanpy
+cfgv==3.5.0
     # via pre-commit
-charset-normalizer==3.4.2
+charset-normalizer==3.5.2
     # via requests
-click==8.2.1
+click==8.5.1
     # via
     #   dask
+    #   distributed
     #   mkdocs
     #   pip-tools
     #   spatialdata
     #   spatialdata-io
-cloudpickle==3.1.1
-    # via dask
+cloudpickle==3.1.2
+    # via
+    #   dask
+    #   distributed
+    #   joblib
 colorama==0.4.6
     # via mkdocs-material
-colorcet==3.1.0
+colorcet==3.2.1
     # via datashader
-comm==0.2.2
+comm==0.2.3
     # via ipykernel
-contourpy==1.3.2
+contourpy==1.4.0
     # via matplotlib
-coverage[toml]==7.9.1
+coverage[toml]==7.17.2
     # via pytest-cov
+cp-measure==0.2.0
+    # via squidpy
 cycler==0.12.1
     # via
     #   matplotlib
     #   squidpy
-dask[array,dataframe]==2024.11.2
+dask[array,distributed]==2026.8.0
     # via
-    #   dask-expr
     #   dask-image
+    #   distributed
     #   multiscale-spatial-image
     #   ome-zarr
     #   spatialdata
     #   squidpy
-dask-expr==1.1.19
-    # via dask
-dask-image==2024.5.3
+dask-image==2026.5.0
     # via
     #   spatialdata
     #   spatialdata-io
     #   squidpy
-datashader==0.18.1
-    # via xarray-spatial
-debugpy==1.8.14
+datashader==0.19.1
+    # via spatialdata
+debugpy==1.8.22
     # via ipykernel
-decorator==5.2.1
-    # via ipython
 defusedxml==0.7.1
     # via
     #   nbconvert
     #   odfpy
-deprecated==1.2.18
-    # via numcodecs
-distlib==0.3.9
+deprecated==3.0.1
+    # via ome-zarr
+deprecation==2.1.0
+    # via centrosome
+distlib==0.4.4
     # via virtualenv
+distributed==2026.8.0
+    # via
+    #   dask
+    #   spatialdata
 docrep==0.3.2
     # via
     #   omnipath
     #   squidpy
+donfig==0.8.1.post1
+    # via zarr
 et-xmlfile==2.0.0
     # via openpyxl
-executing==2.2.0
+executing==2.3.0
     # via stack-data
-fasteners==0.19
-    # via zarr
-fastjsonschema==2.21.1
-    # via nbformat
-filelock==3.18.0
+fast-array-utils[accel,sparse]==1.5.1
     # via
+    #   scanpy
+    #   squidpy
+fastjsonschema==2.22.3
+    # via nbformat
+filelock==4.2.9
+    # via
+    #   python-discovery
     #   torch
     #   virtualenv
 flowio==1.4.0
     # via readfcs
-fonttools==4.58.4
+fonttools==4.68.0
     # via matplotlib
-frozenlist==1.7.0
+formulaic==1.2.2
+    # via statsmodels
+frozenlist==1.8.0
     # via
     #   aiohttp
     #   aiosignal
-fsspec[s3]==2025.5.1
+fsspec[http,s3]==2026.9.0
     # via
     #   dask
     #   ome-zarr
@@ -148,68 +174,78 @@ fsspec[s3]==2025.5.1
     #   spatialdata
     #   squidpy
     #   torch
-geopandas==1.1.0
+    #   universal-pathlib
+geopandas==1.2.0
     # via spatialdata
 ghp-import==2.1.0
     # via mkdocs
-h5py==3.14.0
+google-crc32c==1.9.0
+    # via zarr
+h5py==3.16.0
     # via
     #   anndata
     #   scanpy
     #   spatialdata-io
-identify==2.6.12
+identify==2.6.20
     # via pre-commit
-idna==3.10
+idna==3.20
     # via
     #   requests
     #   yarl
-igraph==0.11.9
+igraph==1.0.0
     # via
     #   leidenalg
     #   scanpy
-imagecodecs==2025.3.30
-    # via spatialdata-io
-imageio==2.37.0
+imagecodecs==2025.11.11
+    # via
+    #   spatialdata-io
+    #   squidpy
+imageio==2.38.1
     # via
     #   pims
     #   scikit-image
-inflect==7.5.0
+inflect==7.6.0
     # via omnipath
-iniconfig==2.1.0
+iniconfig==2.3.1
     # via pytest
-ipykernel==6.29.5
+interface-meta==2.0.1
+    # via formulaic
+ipykernel==6.31.0
     # via mkdocs-jupyter
-ipython==9.3.0
+ipython==9.18.1
     # via ipykernel
 ipython-pygments-lexers==1.1.1
     # via ipython
-jedi==0.19.2
+jaraco-functools==4.6.0
+    # via inflect
+jedi==0.20.1
     # via ipython
 jinja2==3.1.6
     # via
+    #   distributed
     #   mkdocs
     #   mkdocs-material
     #   nbconvert
     #   torch
-jmespath==1.0.1
+jmespath==1.1.0
     # via
     #   aiobotocore
     #   botocore
-joblib==1.5.1
+joblib==1.6.0
     # via
     #   pynndescent
     #   scanpy
     #   scikit-learn
     #   spatialdata-io
-jsonschema==4.24.0
+jsonschema==4.26.0
     # via nbformat
-jsonschema-specifications==2025.4.1
+jsonschema-specifications==2025.9.1
     # via jsonschema
-jupyter-client==8.6.3
+jupyter-client==8.10.0
     # via
     #   ipykernel
     #   nbclient
-jupyter-core==5.8.1
+jupyter-core==5.9.1
     # via
     #   ipykernel
     #   jupyter-client
@@ -218,52 +254,62 @@ jupyter-core==5.8.1
     #   nbformat
 jupyterlab-pygments==0.3.0
     # via nbconvert
-jupytext==1.17.2
+jupytext==1.19.6
     # via mkdocs-jupyter
-kiwisolver==1.4.8
+kiwisolver==1.5.1
     # via matplotlib
-lazy-loader==0.4
+lazy-loader==0.6
     # via scikit-image
-legacy-api-wrap==1.4.1
+legacy-api-wrap==1.5
+    # via
+    #   anndata
+    #   scanpy
+    #   squidpy
+leidenalg==0.12.0
     # via scanpy
-leidenalg==0.10.2
-    # via scanpy
-llvmlite==0.44.0
+llvmlite==0.50.0
     # via
     #   numba
     #   pynndescent
 locket==1.0.0
-    # via partd
-markdown==3.8.1
+    # via
+    #   distributed
+    #   partd
+mahotas==1.4.19
+    # via cp-measure
+markdown==3.11.3
     # via
     #   mkdocs
     #   mkdocs-material
     #   pymdown-extensions
     #   python-markdown-math
-markdown-it-py==3.0.0
+markdown-it-py==4.2.0
     # via
     #   jupytext
     #   mdit-py-plugins
     #   rich
-markupsafe==3.0.2
+markupsafe==3.0.4
     # via
     #   jinja2
     #   mkdocs
     #   nbconvert
-matplotlib==3.10.3
+matplotlib==3.11.2
     # via
     #   matplotlib-scalebar
     #   recode_st (pyproject.toml)
     #   scanpy
     #   seaborn
+    #   spatialdata-plot
     #   squidpy
-matplotlib-inline==0.1.7
+matplotlib-inline==0.2.2
     # via
     #   ipykernel
     #   ipython
 matplotlib-scalebar==0.9.0
-    # via squidpy
-mdit-py-plugins==0.4.2
+    # via
+    #   spatialdata-plot
+    #   squidpy
+mdit-py-plugins==0.6.1
     # via jupytext
 mdurl==0.1.2
     # via markdown-it-py
@@ -271,7 +317,7 @@ mergedeep==1.3.4
     # via
     #   mkdocs
     #   mkdocs-get-deps
-mistune==3.1.3
+mistune==3.4.0
     # via nbconvert
 mkdocs==1.6.1
     # via
@@ -282,7 +328,7 @@ mkdocs==1.6.1
     #   recode_st (pyproject.toml)
 mkdocs-exclude==1.0.2
     # via recode_st (pyproject.toml)
-mkdocs-get-deps==0.2.0
+mkdocs-get-deps==0.2.2
     # via mkdocs
 mkdocs-include-markdown-plugin==7.1.5
     # via recode_st (pyproject.toml)
@@ -294,74 +340,99 @@ mkdocs-material==9.6.12
     #   recode_st (pyproject.toml)
 mkdocs-material-extensions==1.3.1
     # via mkdocs-material
-more-itertools==10.7.0
-    # via inflect
+more-itertools==11.2.1
+    # via
+    #   annsel
+    #   inflect
+    #   jaraco-functools
 mpmath==1.3.0
     # via sympy
-multidict==6.6.2
+msgpack==1.2.4
+    # via distributed
+msgspec==0.22.0
+    # via zarr
+multidict==7.2.1
     # via
     #   aiobotocore
     #   aiohttp
     #   yarl
 multipledispatch==1.0.0
     # via datashader
-multiscale-spatial-image==2.0.2
+multiscale-spatial-image==2.0.3
     # via spatialdata
+narwhals[pandas]==2.28.0
+    # via
+    #   annsel
+    #   formulaic
+    #   scikit-learn
 natsort==8.4.0
     # via
     #   anndata
     #   scanpy
-nbclient==0.10.2
+nbclient==0.11.0
     # via nbconvert
-nbconvert==7.16.6
+nbconvert==7.17.2
     # via mkdocs-jupyter
-nbformat==5.10.4
+nbformat==5.11.1
     # via
     #   jupytext
     #   nbclient
     #   nbconvert
 nest-asyncio==1.6.0
     # via ipykernel
-networkx==3.5
+networkx==3.7
     # via
     #   scanpy
     #   scikit-image
     #   spatialdata
     #   squidpy
     #   torch
-nodeenv==1.9.1
+    #   transformnd
+nodeenv==1.12.0
     # via pre-commit
-numba==0.61.2
+numba==0.68.1
     # via
     #   datashader
+    #   fast-array-utils
+    #   numba-progress
     #   pynndescent
     #   scanpy
     #   spatialdata
     #   squidpy
     #   umap-learn
     #   xarray-spatial
-numcodecs==0.15.1
+numba-progress==1.2.0
+    # via squidpy
+numcodecs==0.17.1
     # via zarr
-numpy==2.2.6
+numpy==2.5.4
     # via
     #   anndata
+    #   centrosome
     #   contourpy
+    #   cp-measure
     #   dask
     #   dask-image
     #   datashader
+    #   fast-array-utils
     #   flowio
+    #   formulaic
     #   geopandas
     #   h5py
     #   imagecodecs
     #   imageio
+    #   mahotas
     #   matplotlib
     #   multiscale-spatial-image
     #   numba
+    #   numba-progress
     #   numcodecs
     #   ome-zarr
+    #   ome-zarr-models
     #   pandas
     #   patsy
     #   pims
+    #   pydantic-zarr
     #   pyogrio
     #   recode_st (pyproject.toml)
     #   scanpy
@@ -376,28 +447,32 @@ numpy==2.2.6
     #   squidpy
     #   statsmodels
     #   tifffile
+    #   transformnd
     #   umap-learn
     #   xarray
-    #   xarray-dataclasses
-    #   xarray-schema
+    #   xarray-dataclass
     #   xarray-spatial
     #   zarr
 odfpy==1.4.1
     # via pandas
-ome-types==0.6.1
+ome-types==0.7.0
     # via spatialdata-io
-ome-zarr==0.11.1
+ome-zarr==0.21.0
     # via spatialdata
-omnipath==1.0.10
+ome-zarr-models==1.9.0
+    # via ome-zarr
+omnipath==1.0.12
     # via squidpy
 openpyxl==3.1.5
     # via pandas
-packaging==25.0
+packaging==26.3
     # via
     #   anndata
     #   build
     #   dask
     #   datashader
+    #   deprecation
+    #   distributed
     #   geopandas
     #   ipykernel
     #   jupytext
@@ -406,25 +481,28 @@ packaging==25.0
     #   mkdocs
     #   nbconvert
     #   omnipath
+    #   patsy
     #   pims
     #   pooch
+    #   pydantic-zarr
     #   pyogrio
     #   pytest
-    #   python-calamine
     #   scanpy
     #   scikit-image
     #   statsmodels
+    #   virtualenv
+    #   wheel
     #   xarray
+    #   zarr
 paginate==0.5.7
     # via mkdocs-material
-pandas[excel]==2.3.0
+pandas[excel]==3.1.1
     # via
     #   anndata
-    #   dask
-    #   dask-expr
-    #   dask-image
     #   datashader
+    #   formulaic
     #   geopandas
+    #   narwhals
     #   omnipath
     #   recode_st (pyproject.toml)
     #   scanpy
@@ -433,77 +511,94 @@ pandas[excel]==2.3.0
     #   squidpy
     #   statsmodels
     #   xarray
+    #   xarray-spatial
 pandocfilters==1.5.1
     # via nbconvert
-param==2.2.1
+param==2.4.2
     # via
     #   datashader
     #   pyct
-parso==0.8.4
+parso==0.8.7
     # via jedi
 partd==1.4.2
     # via dask
-pathspec==0.12.1
+pathlib-abc==0.5.2
+    # via universal-pathlib
+pathspec==1.1.1
     # via mkdocs
-patsy==1.0.1
+patsy==1.0.3
     # via
     #   scanpy
     #   statsmodels
 pexpect==4.9.0
     # via ipython
-pillow==11.2.1
+pillow==11.3.0
     # via
+    #   centrosome
     #   imageio
     #   matplotlib
     #   scikit-image
     #   squidpy
 pims==0.7
     # via dask-image
-pip-tools==7.4.1
+pip-tools==7.6.2
     # via recode_st (pyproject.toml)
-platformdirs==4.3.8
+platformdirs==4.14.5
     # via
     #   jupyter-core
     #   mkdocs-get-deps
     #   pooch
     #   virtualenv
-pluggy==1.6.0
+pluggy==1.7.0
     # via
     #   pytest
     #   pytest-cov
-pooch==1.8.2
-    # via spatialdata
-pre-commit==4.2.0
+pooch==1.9.0
+    # via
+    #   annsel
+    #   scverse-misc
+    #   spatialdata
+    #   squidpy
+pre-commit==4.7.0
     # via recode_st (pyproject.toml)
-prompt-toolkit==3.0.51
+prompt-toolkit==3.0.53
     # via ipython
-propcache==0.3.2
+propcache==0.5.4
     # via
     #   aiohttp
     #   yarl
-psutil==7.0.0
-    # via ipykernel
+psutil==7.2.2
+    # via
+    #   distributed
+    #   ipykernel
+    #   ipython
 ptyprocess==0.7.0
     # via pexpect
-pure-eval==0.2.3
+pure-eval==0.2.4
     # via stack-data
-pyarrow==20.0.0
+pyarrow==26.0.1
     # via
-    #   dask-expr
     #   spatialdata
     #   spatialdata-io
-pyct==0.5.0
+pyct==0.6.0
     # via datashader
-pydantic==2.11.7
+pydantic==2.14.3
     # via
     #   ome-types
+    #   ome-zarr-models
     #   pydantic-extra-types
+    #   pydantic-settings
+    #   pydantic-zarr
     #   recode_st (pyproject.toml)
-pydantic-core==2.33.2
+pydantic-core==2.50.4
     # via pydantic
-pydantic-extra-types==2.10.5
+pydantic-extra-types==2.11.1
     # via ome-types
-pygments==2.19.1
+pydantic-settings==2.16.2
+    # via scverse-misc
+pydantic-zarr==0.10.0
+    # via ome-zarr-models
+pygments==2.21.0
     # via
     #   ipython
     #   ipython-pygments-lexers
@@ -512,32 +607,33 @@ pygments==2.19.1
     #   nbconvert
     #   pytest
     #   rich
-pymdown-extensions==10.15
+pymdown-extensions==10.21.3
     # via mkdocs-material
-pynndescent==0.5.13
+pynndescent==0.6.0
     # via
     #   scanpy
+    #   squidpy
     #   umap-learn
-pyogrio==0.11.0
+pyogrio==0.13.0
     # via geopandas
-pyparsing==3.2.3
+pyparsing==3.3.3
     # via matplotlib
-pyproj==3.7.1
+pyproj==3.8.0
     # via geopandas
-pyproject-hooks==1.2.0
+pyproject-hooks==1.3.3
     # via
     #   build
     #   pip-tools
-pytest==8.4.1
+pytest==9.2.0
     # via
     #   pytest-cov
     #   pytest-mock
     #   recode_st (pyproject.toml)
-pytest-cov==6.2.1
+pytest-cov==7.1.0
     # via recode_st (pyproject.toml)
-pytest-mock==3.14.1
+pytest-mock==3.17.0
     # via recode_st (pyproject.toml)
-python-calamine==0.3.2
+python-calamine==0.9.1
     # via pandas
 python-dateutil==2.9.0.post0
     # via
@@ -548,72 +644,90 @@ python-dateutil==2.9.0.post0
     #   matplotlib
     #   multiscale-spatial-image
     #   pandas
+python-discovery==1.9.5
+    # via virtualenv
+python-dotenv==1.2.4
+    # via
+    #   pydantic-settings
+    #   scverse-misc
 python-markdown-math==0.9
     # via recode_st (pyproject.toml)
-pytz==2025.2
-    # via pandas
 pyxlsb==1.0.10
     # via pandas
-pyyaml==6.0.2
+pyyaml==6.0.3
     # via
     #   dask
+    #   distributed
+    #   donfig
     #   jupytext
     #   mkdocs
     #   mkdocs-get-deps
     #   pre-commit
     #   pymdown-extensions
     #   pyyaml-env-tag
+    #   scverse-misc
+    #   squidpy
 pyyaml-env-tag==1.1
     # via mkdocs
-pyzmq==27.0.0
+pyzmq==27.3.0
     # via
     #   ipykernel
     #   jupyter-client
-readfcs==2.0.1
+rangehttpserver==1.4.0
+    # via ome-zarr
+readfcs==2.1.1
     # via spatialdata-io
-referencing==0.36.2
+referencing==0.37.0
     # via
     #   jsonschema
     #   jsonschema-specifications
-requests==2.32.4
+requests==2.34.2
     # via
     #   datashader
     #   mkdocs-material
     #   ome-zarr
     #   omnipath
     #   pooch
-rich==14.0.0
+rich==15.0.0
     # via spatialdata
-rpds-py==0.25.1
+rpds-py==2026.9.1
     # via
     #   jsonschema
     #   referencing
-ruff==0.12.0
+ruff==0.17.4
     # via recode_st (pyproject.toml)
-s3fs==2025.5.1
+s3fs==2026.9.0
     # via fsspec
-scanpy[leiden]==1.11.2
+scanpy[leiden]==1.12.5
     # via
     #   recode_st (pyproject.toml)
     #   spatialdata-io
+    #   spatialdata-plot
     #   squidpy
-scikit-image==0.25.2
+scikit-image==0.26.0
     # via
+    #   centrosome
+    #   cp-measure
     #   ome-zarr
     #   spatialdata
     #   spatialdata-io
     #   squidpy
-scikit-learn==1.7.0
+scikit-learn==1.9.1
     # via
     #   pynndescent
     #   scanpy
+    #   spatialdata-plot
     #   squidpy
     #   umap-learn
-scipy==1.15.3
+scipy==1.18.1
     # via
     #   anndata
+    #   centrosome
+    #   cp-measure
     #   dask-image
     #   datashader
+    #   fast-array-utils
+    #   formulaic
     #   pynndescent
     #   scanpy
     #   scikit-image
@@ -621,13 +735,22 @@ scipy==1.15.3
     #   spatialdata
     #   statsmodels
     #   umap-learn
+    #   xarray-spatial
+scverse-misc[datasets,settings]==0.1.8
+    # via
+    #   anndata
+    #   scanpy
+    #   squidpy
 seaborn==0.13.2
     # via
     #   recode_st (pyproject.toml)
     #   scanpy
-session-info2==0.1.2
-    # via scanpy
-shapely==2.1.1
+session-info2==0.4.2
+    # via
+    #   annsel
+    #   scanpy
+    #   scverse-misc
+shapely==2.2.0
     # via
     #   geopandas
     #   spatialdata
@@ -637,62 +760,76 @@ six==1.17.0
     #   python-dateutil
 slicerator==1.1.0
     # via pims
-soupsieve==2.7
+sortedcontainers==2.4.0
+    # via distributed
+soupsieve==4.0.1
     # via beautifulsoup4
-spatial-image==1.2.1
+spatial-image==1.2.3
     # via
     #   multiscale-spatial-image
     #   spatialdata
-spatialdata==0.4.0
+spatialdata==0.8.0
     # via
+    #   recode_st (pyproject.toml)
     #   spatialdata-io
+    #   spatialdata-plot
     #   squidpy
-spatialdata-io==0.2.0
+spatialdata-io==0.7.1
     # via recode_st (pyproject.toml)
-squidpy==1.6.5
+spatialdata-plot==0.4.3
+    # via squidpy
+squidpy==1.8.4
     # via recode_st (pyproject.toml)
 stack-data==0.6.3
     # via ipython
-statsmodels==0.14.4
+statsmodels==0.15.0
     # via
     #   scanpy
     #   squidpy
 sympy==1.14.0
     # via torch
-texttable==1.7.0
+tblib==3.2.2
+    # via distributed
+texttable==1.7.2
     # via igraph
-threadpoolctl==3.6.0
-    # via scikit-learn
-tifffile==2025.6.11
+threadpoolctl==3.8.0
+    # via
+    #   scikit-learn
+    #   squidpy
+tifffile==2026.11.8
     # via
     #   dask-image
     #   pims
     #   scikit-image
     #   spatialdata-io
     #   squidpy
-tinycss2==1.4.0
+tinycss2==1.5.1
     # via bleach
-toolz==1.0.0
+toolz==1.2.0
     # via
     #   dask
     #   datashader
+    #   distributed
     #   ome-zarr
     #   partd
-torch==2.7.1
+torch==2.15.0
     # via recode_st (pyproject.toml)
-tornado==6.5.1
+tornado==6.6
     # via
+    #   distributed
     #   ipykernel
     #   jupyter-client
-tqdm==4.67.1
+tqdm==4.70.1
     # via
+    #   annsel
+    #   numba-progress
     #   omnipath
     #   scanpy
+    #   scverse-misc
     #   squidpy
     #   umap-learn
-traitlets==5.14.3
+traitlets==5.16.1
     # via
-    #   comm
     #   ipykernel
     #   ipython
     #   jupyter-client
@@ -701,87 +838,109 @@ traitlets==5.14.3
     #   nbclient
     #   nbconvert
     #   nbformat
-typeguard==4.4.4
+transformnd==0.9.2
+    # via ome-zarr
+typeguard==4.6.0
     # via inflect
-typing-extensions==4.14.0
+typing-extensions==4.16.0
     # via
+    #   aiohttp
+    #   aiosignal
+    #   anndata
     #   beautifulsoup4
+    #   formulaic
+    #   jupyter-client
+    #   numcodecs
     #   omnipath
     #   pydantic
     #   pydantic-core
     #   pydantic-extra-types
+    #   pydantic-settings
     #   referencing
     #   scanpy
+    #   scverse-misc
     #   spatialdata
     #   torch
+    #   transformnd
     #   typeguard
     #   typing-inspection
-    #   xarray-dataclasses
+    #   xarray-dataclass
     #   xsdata
-typing-inspection==0.4.1
-    # via pydantic
-tzdata==2025.2
-    # via pandas
-umap-learn==0.5.7
+    #   zarr
+typing-inspection==0.4.5
+    # via
+    #   pydantic
+    #   pydantic-settings
+umap-learn==0.5.12
     # via scanpy
-urllib3==2.5.0
+universal-pathlib==0.3.10
+    # via
+    #   annsel
+    #   spatialdata
+urllib3==2.8.0
     # via
     #   botocore
     #   omnipath
     #   requests
-validators==0.35.0
+    #   xarray-spatial
+validators==0.36.0
     # via squidpy
-virtualenv==20.31.2
+virtualenv==21.15.6
     # via pre-commit
-watchdog==6.0.0
+watchdog==7.1.0
     # via mkdocs
-wcmatch==10.0
+wcmatch==12.0.1
     # via mkdocs-include-markdown-plugin
-wcwidth==0.2.13
+wcwidth==0.9.4
     # via prompt-toolkit
-webencodings==0.5.1
+webencodings==0.6.1
     # via
     #   bleach
     #   tinycss2
-wheel==0.45.1
+wheel==0.48.0
     # via pip-tools
-wrapt==1.17.2
+wrapt==2.5.2
     # via
     #   aiobotocore
     #   deprecated
+    #   formulaic
     #   omnipath
-xarray==2024.11.0
+xarray==2026.9.0
     # via
     #   datashader
     #   multiscale-spatial-image
     #   spatial-image
     #   spatialdata
     #   squidpy
-    #   xarray-dataclasses
-    #   xarray-schema
+    #   xarray-dataclass
     #   xarray-spatial
-xarray-dataclasses==1.9.1
+xarray-dataclass==3.0.0
     # via
+    #   multiscale-spatial-image
     #   spatial-image
-    #   spatialdata
-xarray-schema==0.0.3
-    # via spatialdata
-xarray-spatial==0.4.0
+xarray-spatial==0.10.20
     # via spatialdata
 xlrd==2.0.2
     # via pandas
-xlsxwriter==3.2.5
+xlsxwriter==3.3.1
     # via pandas
-xsdata==24.3.1
+xmltodict==1.0.4
+    # via spatialdata-io
+xsdata==26.10
     # via ome-types
-yarl==1.20.1
+yarl==1.25.1
     # via aiohttp
-zarr==2.18.7
+zarr==3.4.2
     # via
+    #   anndata
     #   multiscale-spatial-image
     #   ome-zarr
+    #   ome-zarr-models
+    #   recode_st (pyproject.toml)
     #   spatialdata
     #   squidpy
+zict==3.0.0
+    # via distributed
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
