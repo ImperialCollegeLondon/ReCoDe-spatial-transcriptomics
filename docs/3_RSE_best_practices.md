@@ -118,21 +118,26 @@ def get_numbers():
     user_input = input("Enter numbers separated by commas: ")
     return [float(x) for x in user_input.split(",")]
 
+
 def calculate_average(numbers):
     return sum(numbers) / len(numbers)
+
 
 def find_maximum(numbers):
     return max(numbers)
 
+
 def display_results(average, maximum):
     print(f"Average: {average}")
     print(f"Maximum: {maximum}")
+
 
 def main():
     numbers = get_numbers()
     avg = calculate_average(numbers)
     max_val = find_maximum(numbers)
     display_results(avg, max_val)
+
 
 if __name__ == "__main__":
     main()
@@ -173,7 +178,6 @@ analysis_pipeline/
 This can be achieved by using functions, classes, or even separate scripts for each step of the analysis as shown below.
 
 ```python
-
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -181,14 +185,17 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 import pandas as pd
 
+
 def load_data():
     iris = load_iris(as_frame=True)
     df = iris.frame
     return df, iris.target_names
 
+
 def clean_data(df):
     # In real cases, handle missing or incorrect values here
     return df.dropna()
+
 
 def engineer_features(df):
     X = df.drop(columns=["target"])
@@ -198,25 +205,31 @@ def engineer_features(df):
     X_scaled = scaler.fit_transform(X)
     return X_scaled, y
 
+
 def train_model(X_train, y_train):
     model = RandomForestClassifier(random_state=42)
     model.fit(X_train, y_train)
     return model
+
 
 def evaluate_model(model, X_test, y_test):
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     print(f"Accuracy: {acc:.2f}")
 
+
 def main():
     df, target_names = load_data()
     df["target"] = df["target"].astype(int)  # Ensure target is numeric
     df = clean_data(df)
     X, y = engineer_features(df)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
 
     model = train_model(X_train, y_train)
     evaluate_model(model, X_test, y_test)
+
 
 if __name__ == "__main__":
     main()
@@ -229,7 +242,6 @@ Code documentation is the practice of writing comments and explanations within y
 `Docstrings` tell users what a function or class does, its parameters, and its return values. They are typically written in a specific format (e.g., Google style, NumPy style) and can be automatically extracted to generate documentation.
 
 ```python
-
 def add(a, b):
     """
     Adds two numbers.
@@ -255,7 +267,7 @@ def add(a: int, b: int) -> int:
 
 ```python
 def add(a: int, b: int) -> int:
-    return a + b # add two integers and return the result
+    return a + b  # add two integers and return the result
 ```
 
 The following example demonstrates how to use docstrings, type hinting, and comments effectively in a Python function:
@@ -272,7 +284,7 @@ def add(a: int, b: int) -> int:
     Returns:
         int: The sum of the two numbers.
     """
-    return a + b # add two integers and return the result
+    return a + b  # add two integers and return the result
 ```
 
 ## Code style, linters, and code formatters
@@ -410,14 +422,18 @@ To write a simple unit test using `unittest` or `pytest`, you can follow this ex
         """Adds two integers."""
         return a + b
 
+
     def test_add_positive_numbers():
         assert add(2, 3) == 5
+
 
     def test_add_negative_numbers():
         assert add(-1, -4) == -5
 
+
     def test_add_mixed_sign_numbers():
         assert add(-2, 5) == 3
+
 
     def test_add_zero():
         assert add(0, 5) == 5
